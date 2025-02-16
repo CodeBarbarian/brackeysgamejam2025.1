@@ -2,11 +2,16 @@ extends Control
 
 @onready var CharacterNameLabel : Label = $CharacterNameLabel
 @onready var CharacterDescriptionLabel : Label = $CharacterDescriptionLabel
+@onready var CharacterTypeLabel : Label = $CharacterTypeLabel
 @onready var CharacterHealthLabel : Label = $CharacterHPLabel
 
-func DisplayCharacterInformation(Name, Description, Health) -> void:
+func _ready() -> void:
+	DisplayCharacterInformation(Characters.Character1_Name, Characters.Character1_Type, Characters.Character1_Description, Characters.Character1_Health)
+
+func DisplayCharacterInformation(Name, Type, Description, Health) -> void:
 	CharacterNameLabel.set_text(str(Name))
 	CharacterDescriptionLabel.set_text(str(Description))
+	CharacterTypeLabel.set_text(str(Type))
 	CharacterHealthLabel.set_text(str(Health))
 
 func _on_embark_button_pressed() -> void:
@@ -17,12 +22,12 @@ func _on_back_button_pressed() -> void:
 
 func _on_character_1_button_pressed() -> void:
 	Gamevars.CharacterSelection = 1
-	DisplayCharacterInformation(Characters.Character1_Name, Characters.Character1_Description, Characters.Character1_Health)
+	DisplayCharacterInformation(Characters.Character1_Name, Characters.Character1_Type, Characters.Character1_Description, Characters.Character1_Health)
 
 func _on_character_2_button_pressed() -> void:
 	Gamevars.CharacterSelection = 2
-	DisplayCharacterInformation(Characters.Character2_Name, Characters.Character2_Description, Characters.Character2_Health)
+	DisplayCharacterInformation(Characters.Character2_Name, Characters.Character2_Type, Characters.Character2_Description, Characters.Character2_Health)
 	
 func _on_character_3_button_pressed() -> void:
 	Gamevars.CharacterSelection = 3
-	DisplayCharacterInformation(Characters.Character3_Name, Characters.Character3_Description, Characters.Character3_Health)
+	DisplayCharacterInformation(Characters.Character3_Name, Characters.Character3_Type, Characters.Character3_Description, Characters.Character3_Health)

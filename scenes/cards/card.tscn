@@ -40,10 +40,14 @@ text = "CARD NAME"
 position = Vector2(-93, 23)
 
 [node name="CardDescriptionLabel" type="Label" parent="CardDescription"]
-offset_right = 133.0
+offset_left = -3.0
+offset_top = -7.0
+offset_right = 143.0
 offset_bottom = 82.0
 text = "Denimwalk (If defending player is wearing any clothing made of denim, this creature is unblockable)"
 label_settings = SubResource("LabelSettings_0h8yd")
+horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
 [node name="CardImage" type="Node2D" parent="."]

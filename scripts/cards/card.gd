@@ -9,7 +9,6 @@ class_name Card extends Node2D
 @onready var CardDescriptionLabel: Label = $CardDescription/CardDescriptionLabel
 @onready var CostLabel: Label = $CostDisplay/CostLabel
 
-
 func _ready():
 	CardNameLabel.set_text(str(CardName))
 	CardDescriptionLabel.set_text(str(CardDescription))

@@ -13,4 +13,12 @@ layer = 10
 [node name="Deck" type="CanvasLayer" parent="."]
 
 [node name="Card" parent="Deck" instance=ExtResource("2_4tlti")]
-position = Vector2(552, 344)
+position = Vector2(112, 117)
+CardName = "First Card"
+CardDescription = "Simply the first card"
+
+[node name="Card2" parent="Deck" instance=ExtResource("2_4tlti")]
+position = Vector2(284, 114)
+CardName = "Second Card"
+CardDescription = "Second card"
+CardCost = 2
