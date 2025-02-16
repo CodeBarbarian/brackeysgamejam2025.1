@@ -10,7 +10,7 @@ func _ready():
 	version_label.text = Config.get_game_version()
 
 func _on_start_button_pressed() -> void:
-	get_tree().change_scene_to_packed(Config.GameScene)
+	get_tree().change_scene_to_packed(Config.CharacterSelectionMenuScene)
 
 func _on_option_button_pressed() -> void:
 	get_tree().change_scene_to_packed(Config.OptionsMenuScene)

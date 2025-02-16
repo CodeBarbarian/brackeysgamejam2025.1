@@ -1,7 +1,7 @@
 extends Node
 
 # ===== Primary Game Details ===== 
-@onready var GameTitle = "Nothing can go wrong" # We need to figure out a name
+@onready var GameTitle = "Mojo World" # We need to figure out a name
 @onready var Author = "CEFM" # Maybe we should have a team name, right now it is just the first letter of our nickname's 
 @onready var Version = "0.0.1"
 @onready var Candidate = "alpha"
@@ -13,6 +13,7 @@ extends Node
 @onready var StartMenuScene = preload("res://scenes/menus/start_menu.tscn")
 @onready var OptionsMenuScene = preload("res://scenes/menus/options_menu.tscn")
 @onready var PauseMenuScene = preload("res://scenes/menus/pause_menu.tscn")
+@onready var CharacterSelectionMenuScene = preload("res://scenes/menus/character_selection_menu.tscn")
 
 # Preload the Game Scene
 @onready var GameScene = preload("res://scenes/game.tscn")

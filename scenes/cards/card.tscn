@@ -1,0 +1,52 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpydga7x8liid"]
+
+[ext_resource type="Script" path="res://scripts/cards/card.gd" id="1_di6x3"]
+[ext_resource type="Texture2D" uid="uid://cqyposgv3no1u" path="res://assets/images/cards/card_base_front.png" id="1_lpc1h"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_5far7"]
+font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_0h8yd"]
+font_size = 9
+font_color = Color(0, 0, 0, 1)
+
+[node name="Card" type="Node2D"]
+script = ExtResource("1_di6x3")
+
+[node name="BaseCardSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_lpc1h")
+
+[node name="CostDisplay" type="Node2D" parent="."]
+position = Vector2(-93, -99)
+
+[node name="CostBaseSprite" type="Sprite2D" parent="CostDisplay"]
+
+[node name="CostLabel" type="Label" parent="CostDisplay"]
+offset_left = 4.0
+offset_right = 44.0
+offset_bottom = 23.0
+text = "0"
+label_settings = SubResource("LabelSettings_5far7")
+
+[node name="CardName" type="Node2D" parent="."]
+position = Vector2(-68, -101)
+
+[node name="CardNameLabel" type="Label" parent="CardName"]
+offset_right = 40.0
+offset_bottom = 23.0
+text = "CARD NAME"
+
+[node name="CardDescription" type="Node2D" parent="."]
+position = Vector2(-93, 23)
+
+[node name="CardDescriptionLabel" type="Label" parent="CardDescription"]
+offset_right = 133.0
+offset_bottom = 82.0
+text = "Denimwalk (If defending player is wearing any clothing made of denim, this creature is unblockable)"
+label_settings = SubResource("LabelSettings_0h8yd")
+autowrap_mode = 2
+
+[node name="CardImage" type="Node2D" parent="."]
+position = Vector2(-93, -72)
+
+[node name="CardImageSprite" type="Sprite2D" parent="CardImage"]

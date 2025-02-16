@@ -21,6 +21,7 @@ Config="*res://resources/config.gd"
 SaveManager="*res://resources/SaveManager/SaveManager.gd"
 Gamevars="*res://resources/gamevars.gd"
 AudioManager="*res://resources/AudioManager/AudioManager.tscn"
+Characters="*res://resources/characters.gd"
 
 [display]
 
@@ -48,3 +49,7 @@ action_pause_menu={
 
 2d_physics/layer_1="world"
 2d_physics/layer_2="player"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
