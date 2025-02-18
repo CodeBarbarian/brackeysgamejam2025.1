@@ -25,7 +25,7 @@ position = Vector2(-93, -99)
 offset_left = 4.0
 offset_right = 44.0
 offset_bottom = 23.0
-text = "0"
+text = "1"
 label_settings = SubResource("LabelSettings_5far7")
 
 [node name="CardName" type="Node2D" parent="."]
@@ -34,7 +34,7 @@ position = Vector2(-68, -101)
 [node name="CardNameLabel" type="Label" parent="CardName"]
 offset_right = 40.0
 offset_bottom = 23.0
-text = "CARD NAME"
+text = "Card Name"
 
 [node name="CardDescription" type="Node2D" parent="."]
 position = Vector2(-93, 23)
@@ -44,7 +44,7 @@ offset_left = -3.0
 offset_top = -7.0
 offset_right = 143.0
 offset_bottom = 82.0
-text = "Denimwalk (If defending player is wearing any clothing made of denim, this creature is unblockable)"
+text = "Card Description"
 label_settings = SubResource("LabelSettings_0h8yd")
 horizontal_alignment = 1
 vertical_alignment = 1
