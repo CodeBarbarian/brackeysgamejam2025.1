@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://b7uc2yk3xsiib"]
 
 [ext_resource type="Script" path="res://scripts/game.gd" id="1_s1sdh"]
-[ext_resource type="PackedScene" uid="uid://dpydga7x8liid" path="res://scenes/cards/card.tscn" id="2_4tlti"]
+[ext_resource type="PackedScene" uid="uid://dldnhdh3i3bn8" path="res://scenes/cards/deck.tscn" id="2_xserp"]
 
 [node name="Game" type="Node2D"]
 script = ExtResource("1_s1sdh")
@@ -10,15 +10,23 @@ script = ExtResource("1_s1sdh")
 unique_name_in_owner = true
 layer = 10
 
+[node name="Button" type="Button" parent="UI"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Create Card 1"
+
+[node name="Button2" type="Button" parent="UI"]
+offset_top = 40.0
+offset_right = 113.0
+offset_bottom = 71.0
+text = "Create Card 2"
+
 [node name="Deck" type="CanvasLayer" parent="."]
 
-[node name="Card" parent="Deck" instance=ExtResource("2_4tlti")]
-position = Vector2(112, 117)
-CardName = "First Card"
-CardDescription = "Simply the first card"
+[node name="Deck" parent="Deck" instance=ExtResource("2_xserp")]
+position = Vector2(576, 1500)
+card_angle = -90.0
+max_card_spread_angle = 2.5
 
-[node name="Card2" parent="Deck" instance=ExtResource("2_4tlti")]
-position = Vector2(284, 114)
-CardName = "Second Card"
-CardDescription = "Second card"
-CardCost = 2
+[connection signal="pressed" from="UI/Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="UI/Button2" to="." method="_on_button_2_pressed"]

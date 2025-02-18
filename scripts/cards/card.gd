@@ -1,6 +1,9 @@
 @tool
 class_name Card extends Node2D
 
+signal mouse_entered(card: Card)
+signal mouse_exited(card: Card)
+
 @export var CardName: String = "Card Name"
 @export var CardDescription: String = "Card Description"
 @export var CardCost : int = 1
@@ -9,6 +12,13 @@ class_name Card extends Node2D
 @onready var CardNameLabel: Label = $CardName/CardNameLabel
 @onready var CardDescriptionLabel: Label = $CardDescription/CardDescriptionLabel
 @onready var CardCostLabel: Label = $CostDisplay/CostLabel
+@onready var BaseCardSprite: Sprite2D = $BaseCardSprite
+#BaseCardSprite.set_modulate(Color(1, 0.5, 0.1, 1))
+func highlight():
+	BaseCardSprite.set_modulate(Color(1, 0.5, 0.1, 1))
+#BaseCardSprite.set_modulate(Color(1, 1, 1, 1))
+func unhighlight():
+	BaseCardSprite.set_modulate(Color(1,1,1,1))
 
 func _update_graphics():
 	if CardNameLabel.get_text() != str(CardName):
@@ -39,3 +49,11 @@ func _ready():
 
 func _process(delta: float) -> void:
 	_update_graphics()
+
+
+func _on_area_2d_mouse_entered() -> void:
+	mouse_entered.emit(self)
+
+
+func _on_area_2d_mouse_exited() -> void:
+	mouse_exited.emit(self)

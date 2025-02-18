@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpydga7x8liid"]
+[gd_scene load_steps=6 format=3 uid="uid://dpydga7x8liid"]
 
 [ext_resource type="Script" path="res://scripts/cards/card.gd" id="1_di6x3"]
 [ext_resource type="Texture2D" uid="uid://cqyposgv3no1u" path="res://assets/images/cards/card_base_front.png" id="1_lpc1h"]
@@ -9,6 +9,9 @@ font_color = Color(0, 0, 0, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_0h8yd"]
 font_size = 9
 font_color = Color(0, 0, 0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ufno5"]
+size = Vector2(150, 206)
 
 [node name="Card" type="Node2D"]
 script = ExtResource("1_di6x3")
@@ -54,3 +57,12 @@ autowrap_mode = 2
 position = Vector2(-93, -72)
 
 [node name="CardImageSprite" type="Sprite2D" parent="CardImage"]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(-24, 3)
+shape = SubResource("RectangleShape2D_ufno5")
+
+[connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]
+[connection signal="mouse_exited" from="Area2D" to="." method="_on_area_2d_mouse_exited"]
