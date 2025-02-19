@@ -1,25 +1,29 @@
-@tool
 class_name Deck extends Node2D
 
-@export var deck_radius: int = 1000
-@export var card_angle: float = -90
-@export var angle_limit: float = 25
-@export var max_card_spread_angle: float = 5
-
+# Onready vars
 @onready var TestCard = $TestCard
 @onready var DebugShape = $DebugShape
+@onready var player_card_limit: int = Gamevars.MaxPlayingCards
+@onready var deck_radius: int = Gamevars.DeckRadius
+@onready var card_angle: float = Gamevars.CardAngle
+@onready var angle_limit: float = Gamevars.AngleLimit
+@onready var max_card_spread_angle: float = Gamevars.MaxCardSpreadAngle
 
 var player_deck: Array = []
 var touched: Array = []
 var current_selected_card_index: int = -1
 
+## Add Card to the Player Deck
 func add_card(card: Node2D):
-	player_deck.push_back(card)
-	add_child(card)
-	card.mouse_entered.connect(_handle_card_touched)
-	card.mouse_exited.connect(_handle_card_untouched)
-	reorder_cards()
+	if player_deck.size() < player_card_limit:
+		player_deck.push_back(card)
+		add_child(card)
+		card.mouse_entered.connect(_handle_card_touched)
+		card.mouse_exited.connect(_handle_card_untouched)
+		reorder_cards()
+	print(player_deck.size())
 
+## Remove Card from the player deck
 func remove_card(index: int) -> Node2D:
 	var removing_card = player_deck[index]
 	player_deck.remove_at(index)
@@ -27,7 +31,8 @@ func remove_card(index: int) -> Node2D:
 	remove_child(removing_card)
 	reorder_cards()
 	return removing_card
-	
+
+## Reorder player deck
 func reorder_cards():
 	var card_spread = min(angle_limit / player_deck.size(), max_card_spread_angle)
 	var current_angle = -(card_spread * (player_deck.size() -1))/2 - 90
@@ -35,16 +40,18 @@ func reorder_cards():
 		_card_transform_update(card, current_angle)
 		current_angle += card_spread
 
+## Helper function to transform the position and rotation compared to the collision shape and the other cards
 func _card_transform_update(card: Node2D, angle_in_drag: float):
 	card.set_position(get_card_position(angle_in_drag))
 	card.set_rotation(deg_to_rad(angle_in_drag + 90))
-	
+
+## Get the card position
 func get_card_position(angle_in_degre: float) -> Vector2:
 	var x: float = deck_radius * cos(deg_to_rad(angle_in_degre))
 	var y: float = deck_radius * sin(deg_to_rad(angle_in_degre))
 
 	return Vector2(x,y)
-	
+
 func _handle_card_touched(card: Card):
 	touched.push_back(card)
 

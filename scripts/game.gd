@@ -4,8 +4,8 @@ extends Node2D
 @onready var CardScene: PackedScene = preload("res://scenes/cards/card.tscn")
 @onready var Deck: Deck = $Deck/Deck
 
-
 var Round: int = 1
+
 
 func GetPauseMenu():
 	var PauseMenuInstance = Config.PauseMenuScene.instantiate()

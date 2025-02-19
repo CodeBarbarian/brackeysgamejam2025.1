@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://brctybhyykuit"]
+[gd_scene load_steps=9 format=3 uid="uid://brctybhyykuit"]
 
 [ext_resource type="Texture2D" uid="uid://balkfrhyl3745" path="res://assets/UI/HealthBarPanel_160x41.png" id="1_rwt68"]
 [ext_resource type="Texture2D" uid="uid://bxn8sbjsvg3ej" path="res://assets/UI/ValueBar_128x16.png" id="2_rftfv"]
@@ -6,6 +6,16 @@
 [ext_resource type="Texture2D" uid="uid://dyufuyrvitse" path="res://assets/UI/ValueRed_120x8.png" id="4_8lnvh"]
 [ext_resource type="Texture2D" uid="uid://bpvy2hhtpjwhx" path="res://assets/UI/HeartIcons_32x32.png" id="5_42c0s"]
 [ext_resource type="Texture2D" uid="uid://dy75c6sj51jt6" path="res://assets/UI/BlackBigCircleBoxWithBorder_27x27.png" id="6_yxnji"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f4x6k"]
+font_size = 10
+font_color = Color(0.999983, 0.19934, 0.301422, 1)
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_prhs0"]
+font_size = 10
+font_color = Color(0.497151, 0.802557, 0.3476, 1)
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="UI" type="Control"]
 layout_mode = 3
@@ -44,3 +54,71 @@ texture = ExtResource("5_42c0s")
 [node name="BlackCircle" type="Sprite2D" parent="StatusBar"]
 position = Vector2(32, 32)
 texture = ExtResource("6_yxnji")
+
+[node name="UIPanel" type="Panel" parent="."]
+z_index = -20
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 64.0
+
+[node name="RoundControl" type="Control" parent="UIPanel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="RoundLabel" type="Label" parent="UIPanel/RoundControl"]
+layout_mode = 0
+offset_left = 392.0
+offset_top = 8.0
+offset_right = 460.0
+offset_bottom = 31.0
+text = "Round:"
+
+[node name="CurrentRoundLabel" type="Label" parent="UIPanel/RoundControl"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 8.0
+offset_right = 488.0
+offset_bottom = 31.0
+text = "1"
+
+[node name="TurnLabel" type="Label" parent="UIPanel/RoundControl"]
+layout_mode = 0
+offset_left = 404.0
+offset_top = 30.0
+offset_right = 445.0
+offset_bottom = 53.0
+text = "Turn:"
+
+[node name="CurrentTurnLabel" type="Label" parent="UIPanel/RoundControl"]
+layout_mode = 0
+offset_left = 448.0
+offset_top = 32.0
+offset_right = 488.0
+offset_bottom = 55.0
+text = "0"
+
+[node name="HealthEnergy" type="Control" parent="UIPanel"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Health" type="Label" parent="UIPanel/HealthEnergy"]
+z_index = 100
+layout_mode = 0
+offset_left = 96.0
+offset_top = 16.0
+offset_right = 139.0
+offset_bottom = 39.0
+text = "32/32"
+label_settings = SubResource("LabelSettings_f4x6k")
+
+[node name="Energy" type="Label" parent="UIPanel/HealthEnergy"]
+z_index = 100
+layout_mode = 0
+offset_left = 104.0
+offset_top = 32.0
+offset_right = 144.0
+offset_bottom = 55.0
+text = "3/3"
+label_settings = SubResource("LabelSettings_prhs0")

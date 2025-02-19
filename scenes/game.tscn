@@ -16,13 +16,11 @@ unique_name_in_owner = true
 
 [node name="Deck" parent="Deck" instance=ExtResource("2_xserp")]
 position = Vector2(576, 1500)
-card_angle = -90.0
-max_card_spread_angle = 2.5
 
-[node name="Button" type="Button" parent="."]
+[node name="RandomCardButton" type="Button" parent="."]
 offset_top = 152.0
 offset_right = 113.0
 offset_bottom = 183.0
 text = "Random Card"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="RandomCardButton" to="." method="_on_button_pressed"]
