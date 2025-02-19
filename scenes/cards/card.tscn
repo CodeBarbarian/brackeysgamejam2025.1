@@ -20,7 +20,7 @@ script = ExtResource("1_di6x3")
 texture = ExtResource("1_lpc1h")
 
 [node name="CostDisplay" type="Node2D" parent="."]
-position = Vector2(-93, -99)
+position = Vector2(-69, -102)
 
 [node name="CostBaseSprite" type="Sprite2D" parent="CostDisplay"]
 
@@ -32,7 +32,7 @@ text = "1"
 label_settings = SubResource("LabelSettings_5far7")
 
 [node name="CardName" type="Node2D" parent="."]
-position = Vector2(-68, -101)
+position = Vector2(-44, -104)
 
 [node name="CardNameLabel" type="Label" parent="CardName"]
 offset_right = 40.0
@@ -40,13 +40,11 @@ offset_bottom = 23.0
 text = "Card Name"
 
 [node name="CardDescription" type="Node2D" parent="."]
-position = Vector2(-93, 23)
+position = Vector2(-73, 12)
 
 [node name="CardDescriptionLabel" type="Label" parent="CardDescription"]
-offset_left = -3.0
-offset_top = -7.0
-offset_right = 143.0
-offset_bottom = 82.0
+offset_right = 146.0
+offset_bottom = 89.0
 text = "Card Description"
 label_settings = SubResource("LabelSettings_0h8yd")
 horizontal_alignment = 1
@@ -61,7 +59,7 @@ position = Vector2(-93, -72)
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
-position = Vector2(-24, 3)
+visible = false
 shape = SubResource("RectangleShape2D_ufno5")
 
 [connection signal="mouse_entered" from="Area2D" to="." method="_on_area_2d_mouse_entered"]

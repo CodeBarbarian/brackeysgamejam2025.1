@@ -2,7 +2,7 @@ extends Node
 
 # These are just defaults at this point
 @onready var BaseEnergy = 3
-@onready var CharacterSelection = null
+@onready var CharacterSelection = 1
 
 # General Vars for the player deck
 @onready var DeckRadius: int = 1000

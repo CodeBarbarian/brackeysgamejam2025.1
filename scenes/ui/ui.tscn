@@ -1,5 +1,6 @@
-[gd_scene load_steps=9 format=3 uid="uid://brctybhyykuit"]
+[gd_scene load_steps=10 format=3 uid="uid://brctybhyykuit"]
 
+[ext_resource type="Script" path="res://scripts/ui/ui.gd" id="1_7e160"]
 [ext_resource type="Texture2D" uid="uid://balkfrhyl3745" path="res://assets/UI/HealthBarPanel_160x41.png" id="1_rwt68"]
 [ext_resource type="Texture2D" uid="uid://bxn8sbjsvg3ej" path="res://assets/UI/ValueBar_128x16.png" id="2_rftfv"]
 [ext_resource type="Texture2D" uid="uid://hxrn06wjps2p" path="res://assets/UI/ValueBlue_120x8.png" id="3_ih818"]
@@ -20,13 +21,14 @@ shadow_color = Color(0, 0, 0, 1)
 [node name="UI" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_7e160")
 
 [node name="StatusBar" type="Node2D" parent="."]
 
 [node name="HealthBarPanel" type="Sprite2D" parent="StatusBar"]
 z_index = -10
-position = Vector2(94, 32)
-scale = Vector2(1.125, 1)
+position = Vector2(96, 32)
+scale = Vector2(1.1, 1)
 texture = ExtResource("1_rwt68")
 
 [node name="EnergyValueBar" type="Sprite2D" parent="StatusBar"]
@@ -80,7 +82,7 @@ offset_left = 448.0
 offset_top = 8.0
 offset_right = 488.0
 offset_bottom = 31.0
-text = "1"
+text = "0"
 
 [node name="TurnLabel" type="Label" parent="UIPanel/RoundControl"]
 layout_mode = 0
@@ -106,11 +108,11 @@ offset_bottom = 40.0
 [node name="Health" type="Label" parent="UIPanel/HealthEnergy"]
 z_index = 100
 layout_mode = 0
-offset_left = 96.0
+offset_left = 104.0
 offset_top = 16.0
-offset_right = 139.0
+offset_right = 147.0
 offset_bottom = 39.0
-text = "32/32"
+text = "0/0"
 label_settings = SubResource("LabelSettings_f4x6k")
 
 [node name="Energy" type="Label" parent="UIPanel/HealthEnergy"]
@@ -120,5 +122,5 @@ offset_left = 104.0
 offset_top = 32.0
 offset_right = 144.0
 offset_bottom = 55.0
-text = "3/3"
+text = "0/0"
 label_settings = SubResource("LabelSettings_prhs0")

@@ -23,4 +23,12 @@ offset_right = 113.0
 offset_bottom = 183.0
 text = "Random Card"
 
+[node name="StartRoundButton" type="Button" parent="."]
+offset_top = 192.0
+offset_right = 101.0
+offset_bottom = 223.0
+text = "Start Round
+"
+
 [connection signal="pressed" from="RandomCardButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="StartRoundButton" to="." method="_on_start_round_button_pressed"]
