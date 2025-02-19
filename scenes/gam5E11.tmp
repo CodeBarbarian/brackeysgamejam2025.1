@@ -23,6 +23,13 @@ max_card_spread_angle = 2.5
 offset_top = 152.0
 offset_right = 113.0
 offset_bottom = 183.0
-text = "Random Card"
+text = "Create Card 1"
+
+[node name="Button2" type="Button" parent="."]
+offset_top = 192.0
+offset_right = 113.0
+offset_bottom = 223.0
+text = "Create Card 2"
 
 [connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="Button2" to="." method="_on_button_2_pressed"]

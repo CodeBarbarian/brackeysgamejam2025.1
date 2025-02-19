@@ -22,6 +22,7 @@ SaveManager="*res://resources/SaveManager/SaveManager.gd"
 Gamevars="*res://resources/gamevars.gd"
 AudioManager="*res://resources/AudioManager/AudioManager.tscn"
 Characters="*res://resources/characters.gd"
+Stack="*res://resources/stack.gd"
 
 [display]
 
