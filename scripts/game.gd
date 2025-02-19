@@ -4,9 +4,11 @@ extends Node2D
 @onready var UI = $UserInterface/UI
 @onready var CardScene: PackedScene = preload("res://scenes/cards/card.tscn")
 @onready var Deck: Deck = $Deck/Deck
+@onready var Player: Player = $Player
 
 var Round: int = 0
 var Health: int = 0
+var RoundFinished = true
 
 func GetPauseMenu():
 	var PauseMenuInstance = Config.PauseMenuScene.instantiate()
@@ -23,15 +25,16 @@ func AddCard():
 func _on_button_pressed() -> void:
 	AddCard()
 
-
 # Depending on selected character and so on
 func StartFirstRound():
 	# Load the health
 	pass
 
 func _on_start_round_button_pressed() -> void:
-	Round += 1
-	UI.update_ui_turn(Round)
-	UI.update_ui_health()
-	for n in 5:
-		AddCard()
+	if RoundFinished:
+		Round += 1
+		RoundFinished = false
+		UI.update_ui_round(Round)
+		#UI.update_ui_health()
+		for n in 5:
+			AddCard()

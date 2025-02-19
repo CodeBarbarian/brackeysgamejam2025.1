@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://bc1u1dx0ti6pr"]
+[gd_scene load_steps=3 format=3 uid="uid://bc1u1dx0ti6pr"]
 
 [ext_resource type="Script" path="res://scripts/enemy/enemy.gd" id="1_f3lly"]
+[ext_resource type="Texture2D" uid="uid://xn6cujmp00k" path="res://assets/TempCharacters/Orc/Orc/Orc-Idle.png" id="2_bblp7"]
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_f3lly")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(4, 4)
+texture = ExtResource("2_bblp7")
+flip_h = true
+region_enabled = true
+region_rect = Rect2(0, 0, 100, 100)
