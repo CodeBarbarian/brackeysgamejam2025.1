@@ -38,5 +38,12 @@ position = Vector2(280, 272)
 [node name="Enemy" parent="." instance=ExtResource("5_xaus0")]
 position = Vector2(872, 256)
 
+[node name="DrawCardButton" type="Button" parent="."]
+offset_top = 232.0
+offset_right = 90.0
+offset_bottom = 263.0
+text = "Draw Card"
+
 [connection signal="pressed" from="RandomCardButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="StartRoundButton" to="." method="_on_start_round_button_pressed"]
+[connection signal="pressed" from="DrawCardButton" to="." method="_on_draw_card_button_pressed"]

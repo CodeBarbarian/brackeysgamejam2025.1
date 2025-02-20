@@ -10,6 +10,9 @@ var Round: int = 0
 var Health: int = 0
 var RoundFinished = true
 
+func _ready() -> void:
+	pass
+
 func GetPauseMenu():
 	var PauseMenuInstance = Config.PauseMenuScene.instantiate()
 	UserInterface.add_child(PauseMenuInstance)
@@ -23,19 +26,25 @@ func AddCard():
 	Deck.add_card(RandomCard)
 
 func _on_button_pressed() -> void:
-	AddCard()
-
-# Depending on selected character and so on
-func StartFirstRound():
-	
-	UI.update_ui_health(1,1)
+	# Debug Function
 	pass
 
+func StartFirstRound():
+	var SelectedCharacter = Gamevars.CharacterSelection
+	var CharacterData = Characters.GetCharacter(SelectedCharacter)
+	
+	UI.update_ui_character(CharacterData['name'])
+	UI.update_ui_health(CharacterData['health'], CharacterData['health'])
+	UI.update_ui_energy(CharacterData['base_energy'], CharacterData['base_energy'])
+	
 func _on_start_round_button_pressed() -> void:
 	if RoundFinished:
+		StartFirstRound()
 		Round += 1
 		RoundFinished = false
 		UI.update_ui_round(Round)
-		#UI.update_ui_health()
 		for n in 5:
 			AddCard()
+
+func _on_draw_card_button_pressed() -> void:
+	AddCard()

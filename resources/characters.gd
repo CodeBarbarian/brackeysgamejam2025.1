@@ -6,32 +6,38 @@ var characters = {
 		"Name": "Brutus",
 		"Type": "Lizard/Brute",
 		"Description": "A male lizard brute with extreme strength",
-		"Health": "100/100",
+		"Health": 60,
 		"BaseEnergy": 3
 	},
 	2: {
 		"Name": "Oracle",
 		"Type": "Wizard/Druid",
 		"Description": "A female elf wizard/druid with the power of nature",
-		"Health": "50/50",
+		"Health": 40,
 		"BaseEnergy": 3
 	},
 	3: {
 		"Name": "Lucious",
 		"Type": "Demon/Imp Rogue",
 		"Description": "A demon/imp rogue with the ability to cast from the shadows",
-		"Health": "10/10",
+		"Health": 55,
 		"BaseEnergy": 3
 	}
 }
 
-func GetCharacter(character: int) -> Array:
+func GetCharacter(character: int) -> Dictionary:
 	if character in characters:
 		var data = characters[character]
-		return [data["Name"], data["Type"], data["Description"], data["Health"], data["BaseEnergy"]]
+		return {
+			"name": data["Name"],
+			"type": data["Type"],
+			"description": data["Description"],
+			"health": data["Health"],
+			"base_energy": data["BaseEnergy"]
+		}
 	else:
 		print("Character not found")
-		return []
+		return {}
 
 # Example usage:
 # var char_data = GetCharacter(1)

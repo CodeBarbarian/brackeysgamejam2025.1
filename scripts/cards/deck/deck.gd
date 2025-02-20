@@ -21,7 +21,6 @@ func add_card(card: Node2D):
 		card.mouse_entered.connect(_handle_card_touched)
 		card.mouse_exited.connect(_handle_card_untouched)
 		reorder_cards()
-	print(player_deck.size())
 
 ## Remove Card from the player deck
 func remove_card(index: int) -> Node2D:

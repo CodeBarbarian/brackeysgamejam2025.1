@@ -10,6 +10,7 @@ signal mouse_exited(card: Card)
 @export var CardType: String = "Type"
 @export var CardImage = Sprite2D
 
+# Onready vars
 @onready var CardNameLabel: Label = $CardName/CardNameLabel
 @onready var CardDescriptionLabel: Label = $CardDescription/CardDescriptionLabel
 @onready var CardCostLabel: Label = $CostDisplay/CostLabel
@@ -42,7 +43,7 @@ func set_card_name(name: String) -> void:
 ## Helper function to set the card cost
 func set_card_cost(cost: int) -> void:
 	CardCost = cost
-	
+
 ## Helper function to set the card description
 func set_card_description(description: String) -> void:
 	CardDescription = description
