@@ -13,7 +13,13 @@ var card_data = []
 
 func _ready() -> void:
 	# This should really be based on the character selection.
-	load_card_data("res://files/lizard_card_data.json")
+	match(Gamevars.CharacterSelection):
+		1:
+			load_card_data("res://files/lizard_card_data.json")
+		2:
+			pass
+		3:
+			pass
 
 func load_card_data(file_path: String):
 	var file = FileAccess.open(file_path, FileAccess.READ)
