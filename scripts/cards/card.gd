@@ -58,8 +58,9 @@ func set_card_values(name: String, cost: int, description: String, type: String)
 	set_card_cost(cost)
 	set_card_description(description)
 	set_card_type(type)
-
-	_update_graphics()
+	
+	if is_inside_tree():
+		_update_graphics()
 
 ## Function handling when the mouse has entered the Area2D of the card
 func _on_area_2d_mouse_entered() -> void:
@@ -71,7 +72,8 @@ func _on_area_2d_mouse_exited() -> void:
 
 ## Onready function
 func _ready():
-	set_card_values(CardName, CardCost, CardDescription, CardType)
+	if CardName == "Card Name":
+		set_card_values(CardName, CardCost, CardDescription, CardType)
 
 ## Process Function
 func _process(delta: float) -> void:

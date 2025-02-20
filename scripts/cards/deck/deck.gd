@@ -49,13 +49,19 @@ func get_card_position(angle_in_degre: float) -> Vector2:
 	var x: float = deck_radius * cos(deg_to_rad(angle_in_degre))
 	var y: float = deck_radius * sin(deg_to_rad(angle_in_degre))
 
-	return Vector2(x,y)
+	return Vector2(int(x),int(y))
 
 func _handle_card_touched(card: Card):
 	touched.push_back(card)
 
 func _handle_card_untouched(card: Card):
 	touched.remove_at(touched.find(card))
+	
+func load_card_data(file_path: String):
+	pass
+
+func _ready():
+	pass
 	
 func _process(delta):
 	for card in player_deck:
