@@ -27,7 +27,8 @@ func _on_button_pressed() -> void:
 
 # Depending on selected character and so on
 func StartFirstRound():
-	# Load the health
+	
+	UI.update_ui_health(1,1)
 	pass
 
 func _on_start_round_button_pressed() -> void:

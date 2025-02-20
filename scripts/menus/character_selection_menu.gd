@@ -6,7 +6,8 @@ extends Control
 @onready var CharacterHealthLabel : Label = $CharacterHPLabel
 
 func _ready() -> void:
-	DisplayCharacterInformation(Characters.Character1_Name, Characters.Character1_Type, Characters.Character1_Description, Characters.Character1_Health)
+	var Character = Characters.GetCharacter(1)
+	DisplayCharacterInformation(Character[0], Character[1], Character[2], Character[3])
 
 func DisplayCharacterInformation(Name, Type, Description, Health) -> void:
 	CharacterNameLabel.set_text(str(Name))
@@ -21,13 +22,13 @@ func _on_back_button_pressed() -> void:
 	get_tree().change_scene_to_packed(Config.StartMenuScene)
 
 func _on_character_1_button_pressed() -> void:
-	Gamevars.CharacterSelection = 1
-	DisplayCharacterInformation(Characters.Character1_Name, Characters.Character1_Type, Characters.Character1_Description, Characters.Character1_Health)
+	var Character = Characters.GetCharacter(1)
+	DisplayCharacterInformation(Character[0], Character[1], Character[2], Character[3])
 
 func _on_character_2_button_pressed() -> void:
-	Gamevars.CharacterSelection = 2
-	DisplayCharacterInformation(Characters.Character2_Name, Characters.Character2_Type, Characters.Character2_Description, Characters.Character2_Health)
+	var Character = Characters.GetCharacter(2)
+	DisplayCharacterInformation(Character[0], Character[1], Character[2], Character[3])
 	
 func _on_character_3_button_pressed() -> void:
-	Gamevars.CharacterSelection = 3
-	DisplayCharacterInformation(Characters.Character3_Name, Characters.Character3_Type, Characters.Character3_Description, Characters.Character3_Health)
+	var Character = Characters.GetCharacter(3)
+	DisplayCharacterInformation(Character[0], Character[1], Character[2], Character[3])
