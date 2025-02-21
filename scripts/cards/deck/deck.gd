@@ -8,6 +8,7 @@ class_name Deck extends Node2D
 @onready var card_angle: float = Gamevars.CardAngle
 @onready var angle_limit: float = Gamevars.AngleLimit
 @onready var max_card_spread_angle: float = Gamevars.MaxCardSpreadAngle
+@onready var EffectHandler = $"../../EffectHandler"
 
 var player_deck: Array = []
 var touched: Array = []
@@ -21,6 +22,12 @@ func add_card(card: Node2D):
 		card.mouse_entered.connect(_handle_card_touched)
 		card.mouse_exited.connect(_handle_card_untouched)
 		reorder_cards()
+
+func play_card(index: int, player, target, enemies):
+	if index >= 0 and index < player_deck.size():
+		var card = player_deck[index]
+		EffectHandler.apply_effects(card, player, target, enemies)  
+		remove_card(index)  
 
 ## Remove Card from the player deck
 func remove_card(index: int) -> Node2D:
@@ -86,8 +93,10 @@ func _process(delta):
 	TestCard.set_position(get_card_position(card_angle))
 	TestCard.set_rotation(-deg_to_rad(card_angle + 90))
 
-func _input(event):
-	if event.is_action_pressed("mouse_click") && current_selected_card_index >= 0:
-		var card = remove_card(current_selected_card_index)
-		card.queue_free() # just to prevent the memory leak that spawns from this code
-		current_selected_card_index = -1
+#func _input(event):
+#	if event.is_action_pressed("mouse_click") && current_selected_card_index >= 0:
+#		var target = get_target_enemy()  # Get the enemy to target
+#		if target:
+#			play_card(current_selected_card_index, Player, target, active_enemies)  # Play the selected card
+##		else:
+#			print("No valid target selected.")  # Debug message if no target

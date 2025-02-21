@@ -17,6 +17,8 @@ signal mouse_exited(card: Card)
 @onready var CardTypeLabel: Label = $CardType/Label
 @onready var BaseCardSprite: Sprite2D = $BaseCardSprite
 
+var Effects: Array = []
+
 ## Function to highlight the card when hovering
 func highlight():
 	BaseCardSprite.set_modulate(Color(1, 0.5, 0.1, 1))
@@ -53,11 +55,12 @@ func set_card_type(type: String) -> void:
 	CardType = type
 
 ## Helper function to set all the card values at the same time
-func set_card_values(name: String, cost: int, description: String, type: String) -> void:
+func set_card_values(name: String, cost: int, description: String, type: String, effects: Array = []) -> void:
 	set_card_name(name)
 	set_card_cost(cost)
 	set_card_description(description)
 	set_card_type(type)
+	Effects = effects.duplicate()
 	
 	if is_inside_tree():
 		_update_graphics()
