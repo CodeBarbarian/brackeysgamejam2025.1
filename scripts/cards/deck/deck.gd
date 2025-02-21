@@ -9,26 +9,55 @@ class_name Deck extends Node2D
 @onready var angle_limit: float = Gamevars.AngleLimit
 @onready var max_card_spread_angle: float = Gamevars.MaxCardSpreadAngle
 @onready var EffectHandler = $"../../EffectHandler"
+@onready var CardScene: PackedScene = preload("res://scenes/cards/card.tscn")
 
 var player_deck: Array = []
 var touched: Array = []
 var current_selected_card_index: int = -1
+func create_card_instance(card_info: Dictionary) -> Card:
+	var card_instance = CardScene.instantiate() as Card
+	
+	var effects = []
+	if "effects" in card_info and typeof(card_info["effects"]) == TYPE_ARRAY:
+		effects = card_info["effects"].duplicate(true)
 
+	card_instance.set_card_values(
+		card_info.get("name", "Unnamed Card"),
+		card_info.get("energy_cost", 1),
+		card_info.get("description", ""),
+		card_info.get("type", "attack"),
+		effects
+	)
+
+	print("[DEBUG] Created card: " + card_instance.CardName)
+	print("[DEBUG] Effects: " + str(card_instance.Effects))
+
+	return card_instance
+	
 ## Add Card to the Player Deck
-func add_card(card: Node2D):
+func add_card(card_info: Dictionary):
 	if player_deck.size() < player_card_limit:
-		player_deck.push_back(card)
-		add_child(card)
-		card.mouse_entered.connect(_handle_card_touched)
-		card.mouse_exited.connect(_handle_card_untouched)
+		var card_instance = create_card_instance(card_info)  # Create card
+		player_deck.push_back(card_instance) 
+		add_child(card_instance) 
+		card_instance.mouse_entered.connect(_handle_card_touched)
+		card_instance.mouse_exited.connect(_handle_card_untouched)
 		reorder_cards()
 
 func play_card(index: int, player, target, enemies):
 	if index >= 0 and index < player_deck.size():
 		var card = player_deck[index]
-		EffectHandler.apply_effects(card, player, target, enemies)  
-		remove_card(index)  
 
+
+		print("[DEBUG] Playing card: " + card.CardName)
+		print("[DEBUG] Effects applied: " + str(card.Effects))
+
+		if card.Effects.is_empty():
+			print("[WARNING] No effects found in card!")
+
+		EffectHandler.apply_effects(card, player, target, enemies)  
+		remove_card(index)   
+ 
 ## Remove Card from the player deck
 func remove_card(index: int) -> Node2D:
 	var removing_card = player_deck[index]
@@ -92,11 +121,3 @@ func _process(delta):
 
 	TestCard.set_position(get_card_position(card_angle))
 	TestCard.set_rotation(-deg_to_rad(card_angle + 90))
-
-#func _input(event):
-#	if event.is_action_pressed("mouse_click") && current_selected_card_index >= 0:
-#		var target = get_target_enemy()  # Get the enemy to target
-#		if target:
-#			play_card(current_selected_card_index, Player, target, active_enemies)  # Play the selected card
-##		else:
-#			print("No valid target selected.")  # Debug message if no target

@@ -17,6 +17,7 @@ signal mouse_exited(card: Card)
 @onready var CardTypeLabel: Label = $CardType/Label
 @onready var BaseCardSprite: Sprite2D = $BaseCardSprite
 
+## To store the effects in
 var Effects: Array = []
 
 ## Function to highlight the card when hovering
@@ -29,13 +30,13 @@ func unhighlight():
 
 ## Function to update the graphics on the card
 func _update_graphics():
-	if CardNameLabel.get_text() != str(CardName):
+	if CardNameLabel and CardNameLabel.get_text() != str(CardName):
 		CardNameLabel.set_text(str(CardName))
-	if CardDescriptionLabel.get_text()  != str(CardDescription):
+	if CardDescriptionLabel and CardDescriptionLabel.get_text()  != str(CardDescription):
 		CardDescriptionLabel.set_text(str(CardDescription))
-	if CardCostLabel.get_text() != str(CardCost):
+	if CardCostLabel and CardCostLabel.get_text() != str(CardCost):
 		CardCostLabel.set_text(str(CardCost))
-	if CardTypeLabel.get_text() != str(CardType):
+	if CardTypeLabel and CardTypeLabel.get_text() != str(CardType):
 		CardTypeLabel.set_text(str(CardType))
 
 ## Helper function to set thee card name
@@ -60,10 +61,8 @@ func set_card_values(name: String, cost: int, description: String, type: String,
 	set_card_cost(cost)
 	set_card_description(description)
 	set_card_type(type)
-	Effects = effects.duplicate()
-	
-	if is_inside_tree():
-		_update_graphics()
+	Effects = effects
+	_update_graphics()
 
 ## Function handling when the mouse has entered the Area2D of the card
 func _on_area_2d_mouse_entered() -> void:
@@ -72,6 +71,10 @@ func _on_area_2d_mouse_entered() -> void:
 ## Function handling when the mouse has left the Area2D of the card
 func _on_area_2d_mouse_exited() -> void:
 	mouse_exited.emit(self)
+
+## Debug function temp
+func debug_effects():
+	print("[DEBUG] Card: " + CardName + " | Effects: " + str(Effects))
 
 ## Onready function
 func _ready():

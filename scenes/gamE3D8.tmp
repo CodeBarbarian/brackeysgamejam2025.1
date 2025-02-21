@@ -1,0 +1,52 @@
+[gd_scene load_steps=7 format=3 uid="uid://b7uc2yk3xsiib"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1_s1sdh"]
+[ext_resource type="PackedScene" uid="uid://brctybhyykuit" path="res://scenes/ui/ui.tscn" id="2_u0ckk"]
+[ext_resource type="PackedScene" uid="uid://dldnhdh3i3bn8" path="res://scenes/cards/deck.tscn" id="2_xserp"]
+[ext_resource type="PackedScene" uid="uid://ob2720phq3cn" path="res://scenes/player/player.tscn" id="4_igjxf"]
+[ext_resource type="PackedScene" uid="uid://djpcys15q4ftq" path="res://scenes/effecthandler.tscn" id="6_au43l"]
+[ext_resource type="PackedScene" uid="uid://cqvoi7l7nreuj" path="res://scenes/enemy/enemy_spawner.tscn" id="6_v71v1"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_s1sdh")
+
+[node name="UserInterface" type="CanvasLayer" parent="."]
+
+[node name="UI" parent="UserInterface" instance=ExtResource("2_u0ckk")]
+unique_name_in_owner = true
+
+[node name="Deck" type="CanvasLayer" parent="."]
+
+[node name="Deck" parent="Deck" instance=ExtResource("2_xserp")]
+position = Vector2(576, 1500)
+
+[node name="RandomCardButton" type="Button" parent="."]
+offset_top = 152.0
+offset_right = 113.0
+offset_bottom = 183.0
+text = "Random Card"
+
+[node name="StartRoundButton" type="Button" parent="."]
+offset_top = 192.0
+offset_right = 101.0
+offset_bottom = 223.0
+text = "Start Round
+"
+
+[node name="Player" parent="." instance=ExtResource("4_igjxf")]
+position = Vector2(280, 272)
+
+[node name="DrawCardButton" type="Button" parent="."]
+offset_top = 232.0
+offset_right = 90.0
+offset_bottom = 263.0
+text = "Draw Card"
+
+[node name="EnemySpawner" parent="." instance=ExtResource("6_v71v1")]
+position = Vector2(864, 256)
+
+[node name="EffectHandler" parent="." instance=ExtResource("6_au43l")]
+
+[connection signal="pressed" from="RandomCardButton" to="." method="_on_button_pressed"]
+[connection signal="pressed" from="StartRoundButton" to="." method="_on_start_round_button_pressed"]
+[connection signal="pressed" from="DrawCardButton" to="." method="_on_draw_card_button_pressed"]

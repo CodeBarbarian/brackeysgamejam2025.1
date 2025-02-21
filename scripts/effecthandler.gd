@@ -1,21 +1,23 @@
 extends Node2D
 
-# Apply effects from a card to player, target, or enemies
+# Apply Effects from a Card to a Target
 func apply_effects(card, player, target, enemies):
 	if !card or !player or !target:
-		print("Error: Invalid parameters for apply_effects()")
+		print("[ERROR] Invalid parameters for apply_effects()")
 		return
-	
-	if !card.has_method("set_card_values") or !card.has_method("_update_graphics"):
-		print("Error: The card object is not properly initialized.")
-		return
-	
+
+	# Ensure the card has the Effects array
 	if not "Effects" in card or card.Effects.is_empty():
-		print("Error: Card has no effects defined")
-		return
-	
+		print("[WARNING] Card '" + card.CardName + "' has no effects defined.")
+		return  
+
+	print("[INFO] Applying effects for card: " + card.CardName)
+
+	# Loop through all effects on the card
 	for effect in card.Effects:
-		match effect.get("type", ""):
+		var effect_type = effect.get("type", "")
+
+		match effect_type:
 			"damage":
 				apply_damage(effect, target, enemies)
 			"status_effect":
@@ -31,48 +33,74 @@ func apply_effects(card, player, target, enemies):
 			"draw":
 				draw_cards(effect, player)
 			_:
-				print("Unknown effect type:", effect.get("type", ""))
+				print("[WARNING] Unknown effect type:", effect_type)
 
-# ---------------------- EFFECT FUNCTIONS ----------------------
+# Effect Functions
 
-# Apply Damage Effect
+# Apply Damage to Enemy or All Enemies
 func apply_damage(effect, target, enemies = null):
 	var amount = effect.get("amount", 0)
-	if effect.get("target", "") == "enemy":
+	var target_type = effect.get("target", "")
+
+	if target_type == "enemy":
+		print("[INFO] Dealing " + str(amount) + " damage to " + target.name)
 		target.take_damage(amount)
-	elif effect.get("target", "") == "all_enemies" and enemies:
+	elif target_type == "all_enemies" and enemies:
+		print("[INFO] Dealing " + str(amount) + " damage to ALL enemies")
 		for enemy in enemies:
 			enemy.take_damage(amount)
 
-# Apply Status Effect (e.g., weaken, poison)
+# Apply Status Effect (Bleed, Stun, Weaken, etc.)
 func apply_status_effect(effect, target):
 	var status_type = effect.get("effect", "")
 	var amount = effect.get("amount", 0)
-	target.apply_status(status_type, amount)
 
-# Apply Insta-Kill (Conditional)
+	if target.has_method("apply_status"):
+		print("[INFO] Applying Status Effect: " + status_type + " (" + str(amount) + ") to " + target.name)
+		target.apply_status(status_type, amount)
+	else:
+		print("[ERROR] Target '" + target.name + "' cannot receive status effects!")
+
+# Instantly Kill Enemy if Condition is Met
 func apply_insta_kill(effect, target):
-	if effect.has("condition") and effect["condition"] == "target_hp <= 40":
-		if target.get_health_percentage() <= 40:
-			target.kill()
+	var condition = effect.get("condition", "")
+	if condition == "target_hp <= 40" and target.get_health_percentage() <= 40:
+		print("[INFO] Insta-Killing " + target.name)
+		target.die()
 
-# Strip Armor from Target
+# Remove Armor from Target
 func strip_armor(effect, target):
-	target.remove_armor()
+	if target.has_method("remove_armor"):
+		print("[INFO] Stripping armor from " + target.name)
+		target.remove_armor()
+	else:
+		print("[ERROR] Target '" + target.name + "' has no armor to strip!")
 
-# Increase Player Max HP (Conditional on Enemy Death)
+# Increase Player Max HP if Enemy is Killed
 func update_max_hp(effect, player, target):
-	if effect.has("condition") and effect["condition"] == "target_hp <= 0":
-		if target.is_dead():
-			var amount = effect.get("amount", 0)
-			player.increase_max_hp(amount)
+	var condition = effect.get("condition", "")
+	var amount = effect.get("amount", 0)
+
+	if condition == "target_hp <= 0" and target.is_dead():
+		print("[INFO] Increasing Player Max HP by " + str(amount))
+		player.increase_max_hp(amount)
 
 # Apply Armor to Player
 func apply_armor(effect, player):
 	var amount = effect.get("amount", 0)
-	player.add_armor(amount)
+
+	if player.has_method("add_armor"):
+		print("[INFO] Adding " + str(amount) + " armor to Player")
+		player.add_armor(amount)
+	else:
+		print("[ERROR] Player cannot receive armor!")
 
 # Draw Cards for Player
 func draw_cards(effect, player):
 	var amount = effect.get("amount", 0)
-	player.draw_cards(amount)
+
+	if player.has_method("draw_cards"):
+		print("[INFO] Drawing " + str(amount) + " cards for Player")
+		player.draw_cards(amount)
+	else:
+		print("[ERROR] Player cannot draw cards!")

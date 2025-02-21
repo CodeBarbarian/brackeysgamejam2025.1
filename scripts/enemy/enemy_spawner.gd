@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var enemy_scenes: PackedScene = preload("res://scenes/enemy/enemy.tscn")  # Preload enemy scenes
-@export var max_enemies_per_round: int = 2
+@export var max_enemies_per_round: int = 1
 
 var active_enemies = []
 
