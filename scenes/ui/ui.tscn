@@ -145,3 +145,19 @@ offset_top = 8.0
 offset_right = 785.0
 offset_bottom = 31.0
 text = "NAME OF CHARACTER"
+
+[node name="Armor" type="Label" parent="UIPanel/Debug"]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 32.0
+offset_right = 568.0
+offset_bottom = 55.0
+text = "Player Armor:"
+
+[node name="ArmorLabel" type="Label" parent="UIPanel/Debug"]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 32.0
+offset_right = 680.0
+offset_bottom = 55.0
+text = "0"

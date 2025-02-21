@@ -23,7 +23,10 @@ func take_damage(amount: int):
 func add_armor(amount: int):
 	armor += amount
 
-func remove_armor():
+func remove_armor(amount: int):
+	armor -= amount
+
+func strip_armor():
 	armor = 0
 
 func take_turn(player: Node2D):

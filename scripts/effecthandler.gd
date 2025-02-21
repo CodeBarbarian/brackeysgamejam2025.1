@@ -7,7 +7,7 @@ func apply_effects(card, player, target, enemies):
 		return
 
 	# Ensure the card has the Effects array
-	if not "Effects" in card or card.Effects.is_empty():
+	if not "Effects" in card or not card.Effects or card.Effects.is_empty():
 		print("[WARNING] Card '" + card.CardName + "' has no effects defined.")
 		return  
 
@@ -29,9 +29,9 @@ func apply_effects(card, player, target, enemies):
 			"update_max_hp":
 				update_max_hp(effect, player, target)
 			"armor":
-				apply_armor(effect, player)
+				apply_armor(effect, player) # Only applies to player
 			"draw":
-				draw_cards(effect, player)
+				draw_cards(effect, player) # Only applies to player
 			_:
 				print("[WARNING] Unknown effect type:", effect_type)
 
@@ -85,7 +85,7 @@ func update_max_hp(effect, player, target):
 		print("[INFO] Increasing Player Max HP by " + str(amount))
 		player.increase_max_hp(amount)
 
-# Apply Armor to Player
+# Apply Armor to Player (Only the Player)
 func apply_armor(effect, player):
 	var amount = effect.get("amount", 0)
 
@@ -95,7 +95,7 @@ func apply_armor(effect, player):
 	else:
 		print("[ERROR] Player cannot receive armor!")
 
-# Draw Cards for Player
+# Draw Cards for Player (Only the Player)
 func draw_cards(effect, player):
 	var amount = effect.get("amount", 0)
 

@@ -7,9 +7,14 @@ signal action_chosen(enemy, action)
 @export var max_hp: int = 60
 @export var current_hp: int = 60
 @export var armor: int = 0
-@export var strength: int = 0  # ✅ Strength stat
+@export var strength: int = 0 
 
 var status_effects: Dictionary = {}
+
+func _ready() -> void:
+	var CharacterData = Characters.GetCharacter(Gamevars.CharacterSelection)
+	max_hp = CharacterData['health']
+	current_hp = CharacterData['health']
 
 func draw_cards(amount: int):
 	pass
@@ -32,5 +37,5 @@ func heal(amount: int):
 func add_armor(amount: int):
 	armor += amount
 
-func remove_armor():
+func strip_armor():
 	armor = 0

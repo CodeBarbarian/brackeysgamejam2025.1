@@ -27,11 +27,11 @@ offset_bottom = 183.0
 text = "Random Card"
 
 [node name="StartRoundButton" type="Button" parent="."]
-offset_top = 192.0
-offset_right = 101.0
-offset_bottom = 223.0
-text = "Start Round
-"
+offset_left = 384.0
+offset_top = 72.0
+offset_right = 485.0
+offset_bottom = 103.0
+text = "START TURN"
 
 [node name="Player" parent="." instance=ExtResource("4_igjxf")]
 position = Vector2(280, 272)
@@ -47,6 +47,14 @@ position = Vector2(864, 256)
 
 [node name="EffectHandler" parent="." instance=ExtResource("6_au43l")]
 
+[node name="EndRoundButton" type="Button" parent="."]
+offset_left = 504.0
+offset_top = 72.0
+offset_right = 594.0
+offset_bottom = 103.0
+text = "END TURN"
+
 [connection signal="pressed" from="RandomCardButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="StartRoundButton" to="." method="_on_start_round_button_pressed"]
 [connection signal="pressed" from="DrawCardButton" to="." method="_on_draw_card_button_pressed"]
+[connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]

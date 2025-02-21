@@ -147,3 +147,7 @@ func _input(event):
 			Deck.play_card(Deck.current_selected_card_index, Player, target, active_enemies)
 		else:
 			print("[WARNING] No valid target selected.")
+
+
+func _on_end_round_button_pressed() -> void:
+	pass # Replace with function body.
