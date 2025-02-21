@@ -21,12 +21,14 @@ unique_name_in_owner = true
 position = Vector2(576, 1500)
 
 [node name="RandomCardButton" type="Button" parent="."]
-offset_top = 152.0
-offset_right = 113.0
-offset_bottom = 183.0
+offset_left = 248.0
+offset_top = 72.0
+offset_right = 362.0
+offset_bottom = 103.0
 text = "Random Card"
 
 [node name="StartRoundButton" type="Button" parent="."]
+visible = false
 offset_left = 384.0
 offset_top = 72.0
 offset_right = 485.0
@@ -35,8 +37,11 @@ text = "START TURN"
 
 [node name="Player" parent="." instance=ExtResource("4_igjxf")]
 position = Vector2(280, 272)
+max_energy = 3
+current_energy = 3
 
 [node name="DrawCardButton" type="Button" parent="."]
+visible = false
 offset_top = 232.0
 offset_right = 90.0
 offset_bottom = 263.0
@@ -54,7 +59,14 @@ offset_right = 594.0
 offset_bottom = 103.0
 text = "END TURN"
 
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+one_shot = true
+autostart = true
+
 [connection signal="pressed" from="RandomCardButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="StartRoundButton" to="." method="_on_start_round_button_pressed"]
+[connection signal="health_updated" from="Player" to="." method="_on_player_health_updated"]
 [connection signal="pressed" from="DrawCardButton" to="." method="_on_draw_card_button_pressed"]
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

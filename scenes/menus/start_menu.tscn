@@ -1,7 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://p4t18gvo28hv"]
+[gd_scene load_steps=14 format=3 uid="uid://p4t18gvo28hv"]
 
 [ext_resource type="Script" path="res://scripts/menus/start_menu.gd" id="1_buam8"]
 [ext_resource type="Texture2D" uid="uid://hpm6ao4xpgjf" path="res://assets/UI/Button_52x14.png" id="2_sjf6p"]
+[ext_resource type="Texture2D" uid="uid://ckq16f1wlb5xx" path="res://assets/world/sky.png" id="3_3kxqo"]
+[ext_resource type="Texture2D" uid="uid://d0imarthe77sx" path="res://assets/world/far-grounds.png" id="4_jhxj5"]
+[ext_resource type="Texture2D" uid="uid://bubiokecv02fh" path="res://assets/world/clouds.png" id="5_tmf63"]
 
 [sub_resource type="Theme" id="Theme_kvm5l"]
 /colors/Test = Color(0, 0, 0, 1)
@@ -9,6 +12,33 @@
 Button/icons/icon = null
 
 [sub_resource type="ImageTexture" id="ImageTexture_3e1wp"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_tbsuo"]
+font_size = 55
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_28cd1"]
+font_size = 31
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_ofgbe"]
+font_size = 23
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_1dc3u"]
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_hjhnn"]
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_3enkr"]
+shadow_size = 5
+shadow_color = Color(0, 0, 0, 1)
 
 [node name="StartMenu" type="Control"]
 layout_mode = 3
@@ -68,26 +98,80 @@ offset_bottom = 179.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 60
 text = "GAME TITLE"
+label_settings = SubResource("LabelSettings_tbsuo")
 
 [node name="StudioLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 624.0
+offset_left = 56.0
 offset_top = 496.0
-offset_right = 941.0
+offset_right = 373.0
 offset_bottom = 541.0
 theme_override_font_sizes/font_size = 32
 text = "Developed by "
+label_settings = SubResource("LabelSettings_28cd1")
 
 [node name="VersionLabel" type="Label" parent="."]
 unique_name_in_owner = true
 layout_mode = 0
-offset_left = 624.0
+offset_left = 56.0
 offset_top = 541.0
-offset_right = 764.0
+offset_right = 196.0
 offset_bottom = 575.0
 theme_override_font_sizes/font_size = 24
 text = "v0.0.1-alpha"
+label_settings = SubResource("LabelSettings_ofgbe")
+
+[node name="Far-grounds" type="Sprite2D" parent="."]
+position = Vector2(856, 600)
+texture = ExtResource("4_jhxj5")
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = -10
+follow_viewport_enabled = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Clouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
+texture_repeat = 2
+position = Vector2(576, 456)
+scale = Vector2(2.10294, 1.65678)
+texture = ExtResource("5_tmf63")
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="Sky" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
+z_index = -20
+position = Vector2(576, 328)
+scale = Vector2(10.2143, 2.13158)
+texture = ExtResource("3_3kxqo")
+
+[node name="CodeBarbarian" type="Label" parent="."]
+layout_mode = 0
+offset_left = 872.0
+offset_top = 448.0
+offset_right = 1097.0
+offset_bottom = 471.0
+text = "Developed by CodeBarbarian"
+label_settings = SubResource("LabelSettings_1dc3u")
+
+[node name="MasterZeromus" type="Label" parent="."]
+layout_mode = 0
+offset_left = 872.0
+offset_top = 480.0
+offset_right = 1098.0
+offset_bottom = 503.0
+text = "Designed by Master Zeromus"
+label_settings = SubResource("LabelSettings_hjhnn")
+
+[node name="Endergirlplayz" type="Label" parent="."]
+layout_mode = 0
+offset_left = 872.0
+offset_top = 512.0
+offset_right = 1033.0
+offset_bottom = 535.0
+text = "Art by Endergirlplayz"
+label_settings = SubResource("LabelSettings_3enkr")
 
 [connection signal="pressed" from="VBoxContainer/StartButton" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/OptionButton" to="." method="_on_option_button_pressed"]

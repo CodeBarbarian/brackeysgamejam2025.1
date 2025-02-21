@@ -1,5 +1,7 @@
 extends Node2D
 
+signal turn_ended  # Signal to indicate turn switch
+
 @onready var UserInterface = $UserInterface
 @onready var UI = $UserInterface/UI
 @onready var CardScene: PackedScene = preload("res://scenes/cards/card.tscn")
@@ -9,11 +11,50 @@ extends Node2D
 
 @onready var Player: Player = $Player
 
+var is_player_turn: bool = true
+var turn_number: int = 1
+
 var Round: int = 0
 var RoundFinished = true
 var card_data = []
 var active_enemies = []
 var selected_enemy: Enemy = null
+
+func _on_end_round_button_pressed():
+	print("[INFO] Player ended turn.")
+	emit_signal("turn_ended")  # Emit signal for enemy turn
+	if is_player_turn:
+		end_player_turn()
+	
+
+## This needs to be fixed!
+func _on_player_draw_cards(amount):
+	if card_data.size() > 0:
+		var random_card_data = card_data[randi() % card_data.size()]
+		Deck.add_card(random_card_data)
+
+func start_player_turn():
+	is_player_turn = true
+	turn_number += 1
+	UI.update_ui_round(turn_number)
+	#UI.update_ui_message("Player Turn")  
+
+	Player.start_turn()  # Reset energy or resources
+	for n in 5:
+			add_random_card()
+
+func end_player_turn():
+	is_player_turn = false  # Switch to enemy turn
+	#UI.update_ui_message("Enemy Turn")  # Show UI update if needed
+
+	# Let each enemy take an action
+	for enemy in active_enemies:
+		if enemy.has_method("take_turn"):
+			enemy.take_turn(Player)  # Enemy attacks the player
+
+	# Wait for enemies to finish their actions before switching turns
+	await get_tree().create_timer(2.0).timeout  # Delay for animations
+	start_player_turn()
 
 ## ----------------------------------------
 ## Load Character-Specific Deck
@@ -26,6 +67,9 @@ func _ready() -> void:
 			load_card_data("res://files/elf_card_data.json")  # Elf Druid/Wizard
 		3:
 			load_card_data("res://files/demon_card_data.json")  # Demon Rogue
+	
+	Player.draw_cards_requested.connect(_on_player_draw_cards)
+	#turn_ended.connect(_on_enemy_turn)
 
 ## ----------------------------------------
 ## Load Card Data from JSON
@@ -82,9 +126,14 @@ func add_random_card():
 ## Play Selected Card
 ## ----------------------------------------
 func play_card(index: int):
+	if not is_player_turn:
+		print("[WARNING] You cannot play cards during the enemy turn!")
+		return
+
 	var target = get_target_enemy()
 	if target:
 		Deck.play_card(index, Player, target, active_enemies)
+
 
 ## ----------------------------------------
 ## Helper function for starting the first round
@@ -118,18 +167,7 @@ func get_target_enemy() -> Enemy:
 ## Start Round
 ## ----------------------------------------
 func _on_start_round_button_pressed() -> void:
-	if RoundFinished:
-		StartFirstRound()
-		Round += 1
-		RoundFinished = false
-		UI.update_ui_round(Round)
-
-		# Draw 5 starting cards
-		for n in 5:
-			add_random_card()
-		
-		# Spawn Enemies
-		active_enemies = EnemySpawner.spawn_enemies()
+	pass # This function has become redundant --- Remove?
 
 ## ----------------------------------------
 ## Draw Card Button
@@ -149,5 +187,20 @@ func _input(event):
 			print("[WARNING] No valid target selected.")
 
 
-func _on_end_round_button_pressed() -> void:
-	pass # Replace with function body.
+func _on_player_health_updated(current_hp: Variant, max_hp: Variant) -> void:
+	UI.update_ui_health(current_hp, max_hp)
+
+
+func _on_timer_timeout() -> void:
+	if RoundFinished:
+		StartFirstRound()
+		Round += 1
+		RoundFinished = false
+		UI.update_ui_round(Round)
+
+		# Draw 5 starting cards
+		for n in 5:
+			add_random_card()
+		
+		# Spawn Enemies
+		active_enemies = EnemySpawner.spawn_enemies()

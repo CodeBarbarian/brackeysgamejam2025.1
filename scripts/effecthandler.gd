@@ -35,8 +35,6 @@ func apply_effects(card, player, target, enemies):
 			_:
 				print("[WARNING] Unknown effect type:", effect_type)
 
-# Effect Functions
-
 # Apply Damage to Enemy or All Enemies
 func apply_damage(effect, target, enemies = null):
 	var amount = effect.get("amount", 0)
@@ -83,7 +81,7 @@ func update_max_hp(effect, player, target):
 
 	if condition == "target_hp <= 0" and target.is_dead():
 		print("[INFO] Increasing Player Max HP by " + str(amount))
-		player.increase_max_hp(amount)
+		player.increase_max_hp(amount) # This function is yet to be implemented
 
 # Apply Armor to Player (Only the Player)
 func apply_armor(effect, player):
