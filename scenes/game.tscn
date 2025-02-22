@@ -489,7 +489,7 @@ unique_name_in_owner = true
 [node name="Deck" type="CanvasLayer" parent="."]
 
 [node name="Deck" parent="Deck" instance=ExtResource("2_xserp")]
-position = Vector2(576, 1500)
+position = Vector2(648, 1520)
 
 [node name="RandomCardButton" type="Button" parent="."]
 visible = false
@@ -530,7 +530,7 @@ offset_bottom = 551.0
 text = "END TURN"
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 0.1
 one_shot = true
 autostart = true
 
@@ -544,6 +544,7 @@ tile_set = SubResource("TileSet_7qpb0")
 [connection signal="armor_updated" from="Player" to="." method="_on_player_armor_updated"]
 [connection signal="energy_updated" from="Player" to="." method="_on_player_energy_updated"]
 [connection signal="health_updated" from="Player" to="." method="_on_player_health_updated"]
+[connection signal="player_died" from="Player" to="." method="_on_player_player_died"]
 [connection signal="pressed" from="DrawCardButton" to="." method="_on_draw_card_button_pressed"]
 [connection signal="pressed" from="EndRoundButton" to="." method="_on_end_round_button_pressed"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

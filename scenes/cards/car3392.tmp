@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/cards/card.gd" id="1_di6x3"]
 [ext_resource type="Texture2D" uid="uid://cqyposgv3no1u" path="res://assets/images/cards/card_base_front.png" id="1_lpc1h"]
-[ext_resource type="Texture2D" uid="uid://lr2jeac0x7p" path="res://assets/cards/lizard/block.png" id="3_fvvap"]
+[ext_resource type="Texture2D" uid="uid://jmexmd50vpd2" path="res://assets/cards/lizard/battlecall.png" id="3_7t87d"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5far7"]
 font_color = Color(0, 0, 0, 1)
@@ -61,7 +61,7 @@ position = Vector2(-93, -72)
 
 [node name="CardImageSprite" type="Sprite2D" parent="CardImage"]
 position = Vector2(93, 72)
-texture = ExtResource("3_fvvap")
+texture = ExtResource("3_7t87d")
 
 [node name="CardType" type="Node2D" parent="."]
 position = Vector2(-14, 3)

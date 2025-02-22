@@ -4,6 +4,7 @@ signal health_updated(current_hp, max_hp)
 signal energy_updated(current_energy, max_energy)  # Signal for UI updates
 signal draw_cards_requested(amount)
 signal armor_updated(amount)
+signal player_died
 
 @export var max_hp: int = 60
 @export var current_hp: int = 60
@@ -65,8 +66,6 @@ func take_damage(amount: int):
 	current_hp = max(current_hp - effective_damage, 0)
 	emit_signal("health_updated", current_hp, max_hp)
 
-	print("[INFO] Player took " + str(effective_damage) + " damage. Current HP: " + str(current_hp))
-
 	# Check if player is dead
 	if is_dead():
 		die()
@@ -77,7 +76,7 @@ func is_dead() -> bool:
 
 # Handle player death
 func die():
-	print("[GAME OVER] Player has died!")
+	emit_signal("player_died")
 
 # Heal the player
 func heal(amount: int):

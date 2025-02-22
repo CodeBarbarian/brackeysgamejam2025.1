@@ -3,6 +3,7 @@ class_name Enemy extends Node2D
 
 signal health_updated(current_hp, max_hp)
 signal action_chosen(enemy, action)
+signal enemy_action(message)
 
 @onready var HealthBar: ProgressBar = $HealthBar
 @onready var HealthBarLabel: Label = $HealthBarLabel
@@ -66,6 +67,9 @@ func is_dead() -> bool:
 # Enemy dies
 func die():
 	print("[DEAD] " + EnemyName + " has been defeated!")
+	if get_parent():
+		get_parent().active_enemies.erase(self) 
+
 	queue_free()  # Remove enemy from scene
 
 # Enemy AI turn logic
@@ -77,6 +81,7 @@ func take_turn(player):
 	if status_effects.has("stun") and status_effects["stun"] > 0:
 		print("[INFO] " + EnemyName + " is stunned and skips their turn.")
 		status_effects["stun"] -= 1  # Reduce stun duration
+		emit_signal("enemy_action", EnemyName + " is stunned! Skipping turn.")
 		return
 
 	# Choose an action randomly
@@ -88,7 +93,9 @@ func take_turn(player):
 			var damage = randi_range(4, 8)
 			print("[INFO] " + EnemyName + " attacks for " + str(damage) + " damage.")
 			player.take_damage(damage)
+			emit_signal("enemy_action", EnemyName + " attacks for " + str(damage) + " damage!")
 		"defend":
 			add_armor(3)
+			emit_signal("enemy_action", EnemyName + " gains 3 armor!")
 
 	emit_signal("action_chosen", self, chosen_action)

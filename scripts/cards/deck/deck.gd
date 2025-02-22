@@ -1,11 +1,12 @@
+@tool
 class_name Deck extends Node2D
 
 # Onready vars
 @onready var TestCard = $TestCard
 @onready var DebugShape = $DebugShape
 @onready var player_card_limit: int = Gamevars.MaxPlayingCards
-@onready var deck_radius: int = Gamevars.DeckRadius
-@onready var card_angle: float = Gamevars.CardAngle
+@export var deck_radius: int = 1000
+@export var card_angle: float = -90
 @onready var angle_limit: float = Gamevars.AngleLimit
 @onready var max_card_spread_angle: float = Gamevars.MaxCardSpreadAngle
 @onready var EffectHandler = $"../../EffectHandler"
@@ -22,17 +23,18 @@ func create_card_instance(card_info: Dictionary) -> Card:
 	var effects = []
 	if "effects" in card_info and typeof(card_info["effects"]) == TYPE_ARRAY:
 		effects = card_info["effects"].duplicate(true)
+		
+	# Get image path from card_info (default to a placeholder if missing)
+	var image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
 
 	card_instance.set_card_values(
 		card_info.get("name", "Unnamed Card"),
 		card_info.get("energy_cost", 1),
 		card_info.get("description", ""),
 		card_info.get("type", "attack"),
+		image_path,
 		effects
 	)
-
-	print("[DEBUG] Created card: " + card_instance.CardName)
-	print("[DEBUG] Effects: " + str(card_instance.Effects))
 
 	return card_instance
 
@@ -78,7 +80,7 @@ func remove_card(index: int) -> Node2D:
 
 ## Reorder player deck
 func reorder_cards():
-	var card_spread = min(angle_limit / player_deck.size(), max_card_spread_angle)
+	var card_spread = min(angle_limit / player_deck.size() * 1.3, max_card_spread_angle)
 	var current_angle = -(card_spread * (player_deck.size() -1))/2 - 90
 	for card in player_deck:
 		_card_transform_update(card, current_angle)

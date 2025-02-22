@@ -45,13 +45,25 @@ func show_message(text: String):
 		_display_next_message()
 
 func _display_next_message():
-	if message_queue.is_empty():
+	if message_queue.is_empty():	
 		MessageLabel.set_text("")  # Clear label
 		return
 
 	MessageLabel.set_text(message_queue[0])
+	MessageLabel.visible = true  # Ensure it's visible
 
-	await get_tree().create_timer(1.5).timeout  
+	# Animate fade-in
+	var tween = get_tree().create_tween()
+	MessageLabel.modulate = Color(1,1,1,0)  # Start transparent
+	tween.tween_property(MessageLabel, "modulate", Color(1,1,1,1), 0.3)  # Fade in
+
+	await get_tree().create_timer(1.0).timeout  # Display for 2 seconds
+
+	# Animate fade-out
+	tween = get_tree().create_tween()
+	tween.tween_property(MessageLabel, "modulate", Color(1,1,1,0), 0.3)  # Fade out
+
+	await tween.finished
 
 	message_queue.pop_front()
 

@@ -14,24 +14,26 @@ signal turn_ended  # Signal to indicate turn switch
 var is_player_turn: bool = true
 var turn_number: int = 1
 
-var Round: int = 0
+var Round: int = 1
 var RoundFinished = true
 var card_data = []
 var active_enemies = []
 var selected_enemy: Enemy = null
 
+## Player end turn
 func _on_end_round_button_pressed():
-	print("[INFO] Player ended turn.")
-	emit_signal("turn_ended")  # Emit signal for enemy turn
 	if is_player_turn:
+		emit_signal("turn_ended")  # Emit signal for enemy turn
 		end_player_turn()
 	
 ## This needs to be fixed!
+## BUG: We have a problem when drawing multiple cards, this function needs obvious refinement.
 func _on_player_draw_cards(amount):
 	if card_data.size() > 0:
-		var random_card_data = card_data[randi() % card_data.size()]
+		var random_card_data = card_data[randi() % card_data.size()]	
 		Deck.add_card(random_card_data)
 
+## This function is used to start the player turn
 func start_player_turn():
 	is_player_turn = true
 	turn_number += 1
@@ -43,17 +45,65 @@ func start_player_turn():
 	for n in 5:  # Draw 5 new cards
 		add_random_card()
 
+func all_enemies_defeated() -> bool:
+	for enemy in active_enemies:
+		if !enemy.is_dead():
+			return false  # At least one enemy is still alive
+	return true  # All enemies are dead
+
+
+## BUG: Enemys turn show up, before starting new round... Easy fix... just fix it
 func end_player_turn():
 	is_player_turn = false  # Switch to enemy turn
 	Deck.clear_hand()  # Remove all cards from the deck
 	UI.show_message("Enemy's Turn!")
-	# Let each enemy take an action
+	
+	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy) and not enemy.is_dead())
+	
+	if active_enemies.is_empty():
+		start_new_round()
+		return
+	
 	for enemy in active_enemies:
 		if enemy.has_method("take_turn"):
-			enemy.take_turn(Player)  # Enemy attacks the player
+			enemy.take_turn(Player)
 
 	# Wait for enemies to finish their actions before switching turns
 	await get_tree().create_timer(2.0).timeout  # Delay for animations
+	
+	if all_enemies_defeated():
+		start_new_round()
+	else:
+		start_player_turn()
+
+func _on_enemy_action(message: String):
+	UI.show_message(message)
+	print("[DEBUG] Enemy Action Message Received: ", message)  # Debug check
+
+func start_new_round():
+	if !all_enemies_defeated():
+		return
+	
+	Round += 1
+	UI.update_ui_round(Round)
+	UI.show_message("Round " + str(Round) + " begins!")
+
+
+	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy))
+	# Clear defeated enemies
+	EnemySpawner.clear_enemies()
+	active_enemies.clear()
+	
+	if Round % 5 == 0:
+		active_enemies = EnemySpawner.spawn_boss()
+	else:
+		# Spawn new enemies
+		active_enemies = EnemySpawner.spawn_enemies()
+		
+	for enemy in active_enemies:
+		if enemy.has_signal("enemy_action"):
+			enemy.enemy_action.connect(_on_enemy_action)
+
 	start_player_turn()
 
 ## ----------------------------------------
@@ -69,7 +119,10 @@ func _ready() -> void:
 			load_card_data("res://files/demon_card_data.json")  # Demon Rogue
 	
 	Player.draw_cards_requested.connect(_on_player_draw_cards)
-	#turn_ended.connect(_on_enemy_turn)
+	# Needs to be connecting when we actually have an active enemy --> Moving to the start first round!
+	#for enemy in active_enemies:
+		#enemy.enemy_action.connect(_on_enemy_action)
+
 
 ## ----------------------------------------
 ## Load Card Data from JSON
@@ -144,11 +197,18 @@ func _on_enemy_selected(enemy: Enemy):
 ## Get Target Enemy (Fallback to First Enemy)
 ## ----------------------------------------
 func get_target_enemy() -> Enemy:
-	if selected_enemy and selected_enemy.current_hp > 0:
+	# Check if the selected enemy is still valid
+	if is_instance_valid(selected_enemy) and selected_enemy.current_hp > 0:
 		return selected_enemy 
-	elif active_enemies.size() > 0:
+	
+	# Filter out invalid enemies before selecting the first one
+	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy) and enemy.current_hp > 0)
+	
+	# Return the first valid enemy if available
+	if active_enemies.size() > 0:
 		return active_enemies[0]  
-	return null
+
+	return null  # No valid target available
 
 ## ----------------------------------------
 ## Start Round
@@ -167,14 +227,20 @@ func _on_draw_card_button_pressed() -> void:
 ## ----------------------------------------
 func _input(event):
 	if event.is_action_pressed("mouse_click") and Deck.current_selected_card_index >= 0:
-		var target = get_target_enemy()
+		if active_enemies.is_empty():
+			UI.show_message("No enemies to attack!")
+			return
+			
 		var card = Deck.player_deck[Deck.current_selected_card_index]
+		if not Player.spend_energy(card.CardCost):
+			UI.show_message("Not enough energy!")
+			return  # Stop execution if not enough energy
 		
+		var target = get_target_enemy()
 		if target:
-			if Player.spend_energy(card.CardCost):
-				Deck.play_card(Deck.current_selected_card_index, Player, target, active_enemies)
+			Deck.play_card(Deck.current_selected_card_index, Player, target, active_enemies)
 		else:
-			print("[WARNING] No valid target selected.")
+			UI.show_message("No valid target selected!")
 
 func _on_player_health_updated(current_hp: Variant, max_hp: Variant) -> void:
 	UI.update_ui_health(current_hp, max_hp)
@@ -182,18 +248,28 @@ func _on_player_health_updated(current_hp: Variant, max_hp: Variant) -> void:
 func _on_timer_timeout() -> void:
 	if RoundFinished:
 		StartFirstRound()
-		Round += 1
+		if Round > 1:
+			Round += 1
 		RoundFinished = false
 		UI.update_ui_round(Round)
 		UI.show_message("Player begins!")
 		
-		start_player_turn()
 		# Spawn Enemies
 		active_enemies = EnemySpawner.spawn_enemies()
+		
+		for enemy in active_enemies:
+			if enemy.has_signal("enemy_action"):
+				enemy.enemy_action.connect(_on_enemy_action)
+				
+		start_player_turn()
 
 func _on_player_energy_updated(current_energy: Variant, max_energy: Variant) -> void:
 	UI.update_ui_energy(current_energy, max_energy)
 
-
 func _on_player_armor_updated(amount: Variant) -> void:
 	UI.update_ui_armor(amount)
+
+## Take us to the game over screen!
+func _on_player_player_died() -> void:
+	UI.show_message("GAME OVER! You Died!")
+	await get_tree().create_timer(2.5).timeout  

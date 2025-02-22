@@ -14,5 +14,4 @@ shape = SubResource("CircleShape2D_o1g8x")
 
 [node name="TestCard" parent="." instance=ExtResource("2_lc7jw")]
 visible = false
-position = Vector2(-3.49065, -999.994)
-rotation = 0.00349066
+position = Vector2(0, -1000)
