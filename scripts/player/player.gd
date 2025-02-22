@@ -3,6 +3,7 @@ class_name Player extends Node2D
 signal health_updated(current_hp, max_hp)
 signal energy_updated(current_energy, max_energy)  # Signal for UI updates
 signal draw_cards_requested(amount)
+signal armor_updated(amount)
 
 @export var max_hp: int = 60
 @export var current_hp: int = 60
@@ -12,6 +13,13 @@ signal draw_cards_requested(amount)
 @export var strength: int = 0
 
 var status_effects: Dictionary = {}
+
+func spend_energy(amount: int) -> bool:
+	if current_energy >= amount:
+		current_energy -= amount
+		emit_signal("energy_updated", current_energy, max_energy)  # Emit signal for UI updates
+		return true
+	return false  # Not enough energy
 
 func _ready() -> void:
 	# Load character-specific stats

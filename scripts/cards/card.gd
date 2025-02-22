@@ -74,7 +74,8 @@ func _on_area_2d_mouse_exited() -> void:
 
 ## Debug function temp
 func debug_effects():
-	print("[DEBUG] Card: " + CardName + " | Effects: " + str(Effects))
+	#print("[DEBUG] Card: " + CardName + " | Effects: " + str(Effects))
+	pass
 
 ## Onready function
 func _ready():

@@ -26,7 +26,6 @@ func _on_end_round_button_pressed():
 	if is_player_turn:
 		end_player_turn()
 	
-
 ## This needs to be fixed!
 func _on_player_draw_cards(amount):
 	if card_data.size() > 0:
@@ -36,17 +35,18 @@ func _on_player_draw_cards(amount):
 func start_player_turn():
 	is_player_turn = true
 	turn_number += 1
-	UI.update_ui_round(turn_number)
-	#UI.update_ui_message("Player Turn")  
-
+	UI.update_ui_turn(turn_number)
+	UI.show_message("Player's turn!")  # NEW MESSAGE
+	
 	Player.start_turn()  # Reset energy or resources
-	for n in 5:
-			add_random_card()
+
+	for n in 5:  # Draw 5 new cards
+		add_random_card()
 
 func end_player_turn():
 	is_player_turn = false  # Switch to enemy turn
-	#UI.update_ui_message("Enemy Turn")  # Show UI update if needed
-
+	Deck.clear_hand()  # Remove all cards from the deck
+	UI.show_message("Enemy's Turn!")
 	# Let each enemy take an action
 	for enemy in active_enemies:
 		if enemy.has_method("take_turn"):
@@ -123,19 +123,6 @@ func add_random_card():
 		Deck.add_card(random_card_data)
 
 ## ----------------------------------------
-## Play Selected Card
-## ----------------------------------------
-func play_card(index: int):
-	if not is_player_turn:
-		print("[WARNING] You cannot play cards during the enemy turn!")
-		return
-
-	var target = get_target_enemy()
-	if target:
-		Deck.play_card(index, Player, target, active_enemies)
-
-
-## ----------------------------------------
 ## Helper function for starting the first round
 ## ----------------------------------------
 func StartFirstRound():
@@ -181,15 +168,17 @@ func _on_draw_card_button_pressed() -> void:
 func _input(event):
 	if event.is_action_pressed("mouse_click") and Deck.current_selected_card_index >= 0:
 		var target = get_target_enemy()
+		var card = Deck.player_deck[Deck.current_selected_card_index]
+		
 		if target:
-			Deck.play_card(Deck.current_selected_card_index, Player, target, active_enemies)
+			print("THIS IS JUST A TEST")
+			if Player.spend_energy(card.CardCost):
+				Deck.play_card(Deck.current_selected_card_index, Player, target, active_enemies)
 		else:
 			print("[WARNING] No valid target selected.")
 
-
 func _on_player_health_updated(current_hp: Variant, max_hp: Variant) -> void:
 	UI.update_ui_health(current_hp, max_hp)
-
 
 func _on_timer_timeout() -> void:
 	if RoundFinished:
@@ -197,10 +186,11 @@ func _on_timer_timeout() -> void:
 		Round += 1
 		RoundFinished = false
 		UI.update_ui_round(Round)
-
-		# Draw 5 starting cards
-		for n in 5:
-			add_random_card()
+		UI.show_message("Player begins!")
 		
+		start_player_turn()
 		# Spawn Enemies
 		active_enemies = EnemySpawner.spawn_enemies()
+
+func _on_player_energy_updated(current_energy: Variant, max_energy: Variant) -> void:
+	UI.update_ui_energy(current_energy, max_energy)

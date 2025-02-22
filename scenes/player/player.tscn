@@ -5,10 +5,9 @@
 
 [node name="Player" type="Node2D"]
 script = ExtResource("1_8wumj")
-max_energy = null
-current_energy = null
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_a0b74")
 flip_h = true
 region_rect = Rect2(32, 32, 32, 32)

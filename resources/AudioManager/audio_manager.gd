@@ -13,3 +13,4 @@ func PlaySFX(stream: String):
 	
 	await StreamPlayer.finished
 	StreamPlayer.queue_free()
+ 

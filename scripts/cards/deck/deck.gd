@@ -14,6 +14,8 @@ class_name Deck extends Node2D
 var player_deck: Array = []
 var touched: Array = []
 var current_selected_card_index: int = -1
+
+
 func create_card_instance(card_info: Dictionary) -> Card:
 	var card_instance = CardScene.instantiate() as Card
 	
@@ -33,7 +35,14 @@ func create_card_instance(card_info: Dictionary) -> Card:
 	print("[DEBUG] Effects: " + str(card_instance.Effects))
 
 	return card_instance
-	
+
+func clear_hand():
+	while player_deck.size() > 0:
+		var card = player_deck.pop_back()  # Remove the last card in the list
+		remove_child(card)  # Remove it from the scene
+		card.queue_free()  # Free memory
+	reorder_cards()  # Update the layout after clearing
+
 ## Add Card to the Player Deck
 func add_card(card_info: Dictionary):
 	if player_deck.size() < player_card_limit:
