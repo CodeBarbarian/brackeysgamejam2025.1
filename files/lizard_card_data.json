@@ -209,7 +209,7 @@
 		]
 	},
 	{
-		"name": "Incinerating Breath",
+		"name": "Fire Breath",
 		"description": "At the start of your turn, deal 1 damage to all enemies",
 		"type": "enchantment",
 		"energy_cost": 0,

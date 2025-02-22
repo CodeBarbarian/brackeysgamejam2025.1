@@ -23,10 +23,19 @@ func create_card_instance(card_info: Dictionary) -> Card:
 	var effects = []
 	if "effects" in card_info and typeof(card_info["effects"]) == TYPE_ARRAY:
 		effects = card_info["effects"].duplicate(true)
-		
-	# Get image path from card_info (default to a placeholder if missing)
-	var image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
-
+	
+	## There should be a comment here.
+	var image_path = null
+	match(Gamevars.CharacterSelection):
+		1:
+			# Get image path from card_info (default to a placeholder if missing)
+			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
+		2:
+			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")	
+		3:
+			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
+		_:
+			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
 	card_instance.set_card_values(
 		card_info.get("name", "Unnamed Card"),
 		card_info.get("energy_cost", 1),

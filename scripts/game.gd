@@ -56,7 +56,7 @@ func all_enemies_defeated() -> bool:
 func end_player_turn():
 	is_player_turn = false  # Switch to enemy turn
 	Deck.clear_hand()  # Remove all cards from the deck
-	UI.show_message("Enemy's Turn!")
+	
 	
 	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy) and not enemy.is_dead())
 	
@@ -66,8 +66,9 @@ func end_player_turn():
 	
 	for enemy in active_enemies:
 		if enemy.has_method("take_turn"):
+			UI.show_message("Enemy's Turn!")
 			enemy.take_turn(Player)
-
+	
 	# Wait for enemies to finish their actions before switching turns
 	await get_tree().create_timer(2.0).timeout  # Delay for animations
 	
@@ -78,7 +79,6 @@ func end_player_turn():
 
 func _on_enemy_action(message: String):
 	UI.show_message(message)
-	print("[DEBUG] Enemy Action Message Received: ", message)  # Debug check
 
 func start_new_round():
 	if !all_enemies_defeated():
@@ -88,8 +88,8 @@ func start_new_round():
 	UI.update_ui_round(Round)
 	UI.show_message("Round " + str(Round) + " begins!")
 
-
 	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy))
+
 	# Clear defeated enemies
 	EnemySpawner.clear_enemies()
 	active_enemies.clear()
@@ -241,6 +241,8 @@ func _input(event):
 			Deck.play_card(Deck.current_selected_card_index, Player, target, active_enemies)
 		else:
 			UI.show_message("No valid target selected!")
+	if event.is_action_pressed("action_pause_menu"):
+		GetPauseMenu()
 
 func _on_player_health_updated(current_hp: Variant, max_hp: Variant) -> void:
 	UI.update_ui_health(current_hp, max_hp)
@@ -273,3 +275,7 @@ func _on_player_armor_updated(amount: Variant) -> void:
 func _on_player_player_died() -> void:
 	UI.show_message("GAME OVER! You Died!")
 	await get_tree().create_timer(2.5).timeout  
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("action_pause_menu"):
+		GetPauseMenu()
