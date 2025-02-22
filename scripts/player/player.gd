@@ -61,6 +61,7 @@ func modify_strength(amount: int):
 func take_damage(amount: int):
 	var effective_damage = max(amount - armor, 0)
 	armor = max(armor - amount, 0)  # Reduce armor first
+	emit_signal("armor_updated", armor)
 	current_hp = max(current_hp - effective_damage, 0)
 	emit_signal("health_updated", current_hp, max_hp)
 
@@ -87,11 +88,13 @@ func heal(amount: int):
 # Add armor to the player
 func add_armor(amount: int):
 	armor += amount
+	emit_signal("armor_updated", amount)
 	print("[INFO] Player gained " + str(amount) + " armor. Current armor: " + str(armor))
 
 # Remove all armor
 func strip_armor():
 	armor = 0
+	emit_signal("armor_updated", armor)
 	print("[INFO] Player lost all armor.")
 
 # Start the player's turn (regains energy and draws cards)

@@ -171,7 +171,6 @@ func _input(event):
 		var card = Deck.player_deck[Deck.current_selected_card_index]
 		
 		if target:
-			print("THIS IS JUST A TEST")
 			if Player.spend_energy(card.CardCost):
 				Deck.play_card(Deck.current_selected_card_index, Player, target, active_enemies)
 		else:
@@ -194,3 +193,7 @@ func _on_timer_timeout() -> void:
 
 func _on_player_energy_updated(current_energy: Variant, max_energy: Variant) -> void:
 	UI.update_ui_energy(current_energy, max_energy)
+
+
+func _on_player_armor_updated(amount: Variant) -> void:
+	UI.update_ui_armor(amount)

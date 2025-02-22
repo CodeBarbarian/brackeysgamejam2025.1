@@ -11,6 +11,7 @@ func spawn_enemies():
 		var enemy_scene = enemy_scenes
 		var enemy_instance = enemy_scene.instantiate()
 		add_child(enemy_instance)
+		
 		active_enemies.append(enemy_instance)
 	
 	return active_enemies  # Return list of spawned enemies

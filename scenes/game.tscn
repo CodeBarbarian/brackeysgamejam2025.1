@@ -541,6 +541,7 @@ tile_set = SubResource("TileSet_7qpb0")
 
 [connection signal="pressed" from="RandomCardButton" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="StartRoundButton" to="." method="_on_start_round_button_pressed"]
+[connection signal="armor_updated" from="Player" to="." method="_on_player_armor_updated"]
 [connection signal="energy_updated" from="Player" to="." method="_on_player_energy_updated"]
 [connection signal="health_updated" from="Player" to="." method="_on_player_health_updated"]
 [connection signal="pressed" from="DrawCardButton" to="." method="_on_draw_card_button_pressed"]
