@@ -1,7 +1,7 @@
 [gd_scene load_steps=8 format=3 uid="uid://dpydga7x8liid"]
 
 [ext_resource type="Script" path="res://scripts/cards/card.gd" id="1_di6x3"]
-[ext_resource type="Texture2D" uid="uid://cqyposgv3no1u" path="res://assets/images/cards/card_base_front.png" id="1_lpc1h"]
+[ext_resource type="Texture2D" uid="uid://cqyposgv3no1u" path="res://assets/cards/card_base_front.png" id="1_lpc1h"]
 [ext_resource type="Texture2D" uid="uid://lr2jeac0x7p" path="res://assets/cards/lizard/block.png" id="3_fvvap"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_5far7"]

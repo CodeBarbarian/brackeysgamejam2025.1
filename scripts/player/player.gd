@@ -13,6 +13,8 @@ signal player_died
 @export var armor: int = 0
 @export var strength: int = 0
 
+@onready var PlayerSprite: Sprite2D = $PlayerSprite
+
 var status_effects: Dictionary = {}
 
 func spend_energy(amount: int) -> bool:
@@ -29,13 +31,16 @@ func _ready() -> void:
 	current_hp = CharacterData["health"]
 	max_energy = CharacterData["base_energy"]
 	current_energy = max_energy
+	
+	var texture = load(CharacterData['image_path'])
+	if texture:
+		PlayerSprite.texture = texture
 
 	#emit_signal("health_updated", current_hp, max_hp)
 	#emit_signal("energy_updated", current_energy, max_energy)
 
 # Draw cards at the start of the player's turn
 func draw_cards(amount: int):
-	print("[DEBUG] Player requesting to draw " + str(amount) + " cards")
 	emit_signal("draw_cards_requested", amount)  # Emit signal instead of calling Deck directly
 
 # Apply a status effect like "stun" or "strength"
@@ -106,7 +111,7 @@ func start_turn():
 	print("[INFO] Player's turn started!")
 	current_energy = max_energy  # Restore energy
 	emit_signal("energy_updated", current_energy, max_energy)
-	draw_cards(5)  # Draw 2 cards at the start of turn
+	draw_cards(5)
 
 # End the player's turn
 func end_turn():

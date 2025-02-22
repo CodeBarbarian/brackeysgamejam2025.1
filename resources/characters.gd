@@ -5,23 +5,26 @@ var characters = {
 	1: {
 		"Name": "Brutus",
 		"Type": "Lizard/Brute",
-		"Description": "A male lizard brute with extreme strength",
+		"Description": "A lizard brute with extreme strength",
 		"Health": 60,
-		"BaseEnergy": 3
+		"BaseEnergy": 3,
+		"ImagePath": "res://assets/characters/lizard_character.png",
 	},
 	2: {
 		"Name": "Oracle",
 		"Type": "Wizard/Druid",
-		"Description": "A female elf wizard/druid with the power of nature",
+		"Description": "An elf druid with the power of nature",
 		"Health": 40,
-		"BaseEnergy": 3
+		"BaseEnergy": 3,
+		"ImagePath": "res://assets/characters/elf_girl.png",
 	},
 	3: {
 		"Name": "Lucious",
 		"Type": "Demon/Imp Rogue",
-		"Description": "A demon/imp rogue with the ability to cast from the shadows",
+		"Description": "A demon rogue with the ability to cast from the shadows",
 		"Health": 55,
-		"BaseEnergy": 3
+		"BaseEnergy": 3,
+		"ImagePath": "res://assets/characters/imp_character.png"
 	}
 }
 
@@ -33,7 +36,8 @@ func GetCharacter(character: int) -> Dictionary:
 			"type": data["Type"],
 			"description": data["Description"],
 			"health": data["Health"],
-			"base_energy": data["BaseEnergy"]
+			"base_energy": data["BaseEnergy"],
+			"image_path": data["ImagePath"]
 		}
 	else:
 		print("Character not found")

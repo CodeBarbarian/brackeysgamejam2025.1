@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://bc1u1dx0ti6pr"]
 
 [ext_resource type="Script" path="res://scripts/enemy/enemy.gd" id="1_f3lly"]
-[ext_resource type="Texture2D" uid="uid://xn6cujmp00k" path="res://assets/TempCharacters/Orc/Orc/Orc-Idle.png" id="2_bblp7"]
+[ext_resource type="Texture2D" uid="uid://xsx1xtgnp30j" path="res://assets/enemies/slime.png" id="2_0gov5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8ijnw"]
 font_size = 12
@@ -10,27 +10,28 @@ font_size = 12
 script = ExtResource("1_f3lly")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(4, 4)
-texture = ExtResource("2_bblp7")
+texture = ExtResource("2_0gov5")
 flip_h = true
 region_enabled = true
-region_rect = Rect2(0, 0, 100, 100)
+region_rect = Rect2(0, 128, 128, 112)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 modulate = Color(1, 0, 0, 1)
-offset_left = -56.0
-offset_top = -64.0
-offset_right = 69.0
-offset_bottom = -48.0
+offset_left = -64.0
+offset_top = -72.0
+offset_right = 61.0
+offset_bottom = -56.0
 max_value = 30.0
 step = 1.0
 value = 30.0
 show_percentage = false
+metadata/_edit_use_anchors_ = true
 
 [node name="HealthBarLabel" type="Label" parent="."]
-offset_left = -8.0
-offset_top = -64.0
-offset_right = 38.0
-offset_bottom = -41.0
+offset_left = -16.0
+offset_top = -72.0
+offset_right = 30.0
+offset_bottom = -49.0
 text = "100%"
 label_settings = SubResource("LabelSettings_8ijnw")
+metadata/_edit_use_anchors_ = true

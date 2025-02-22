@@ -33,7 +33,7 @@ func create_card_instance(card_info: Dictionary) -> Card:
 		2:
 			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")	
 		3:
-			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
+			image_path = "res://assets/cards/rogue/" + card_info.get("image_name", "default.png")
 		_:
 			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
 	card_instance.set_card_values(

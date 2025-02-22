@@ -22,7 +22,4 @@ func _on_quit_button_pressed() -> void:
 	get_tree().quit()
 
 func _process(delta: float) -> void:
-		#Sprite.region_rect.position += delta * Vector2(ScrollSpeed, ScrollSpeed)
-		#if Sprite.region_rect.position >= Vector2(64,64) :
-			#Sprite.region_rect.position = Vector2.ZERO
 	pass

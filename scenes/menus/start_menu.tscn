@@ -1,10 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://p4t18gvo28hv"]
+[gd_scene load_steps=12 format=3 uid="uid://p4t18gvo28hv"]
 
 [ext_resource type="Script" path="res://scripts/menus/start_menu.gd" id="1_buam8"]
 [ext_resource type="Texture2D" uid="uid://hpm6ao4xpgjf" path="res://assets/UI/Button_52x14.png" id="2_sjf6p"]
-[ext_resource type="Texture2D" uid="uid://ckq16f1wlb5xx" path="res://assets/world/sky.png" id="3_3kxqo"]
-[ext_resource type="Texture2D" uid="uid://d0imarthe77sx" path="res://assets/world/far-grounds.png" id="4_jhxj5"]
-[ext_resource type="Texture2D" uid="uid://bubiokecv02fh" path="res://assets/world/clouds.png" id="5_tmf63"]
+[ext_resource type="Texture2D" uid="uid://cm3mevtbpm1ml" path="res://assets/world/arena/StartMenu.png" id="3_k7y0f"]
 
 [sub_resource type="Theme" id="Theme_kvm5l"]
 /colors/Test = Color(0, 0, 0, 1)
@@ -50,6 +48,7 @@ grow_vertical = 2
 script = ExtResource("1_buam8")
 
 [node name="TextureRect" type="TextureRect" parent="."]
+z_index = -100
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -57,6 +56,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_kvm5l")
+texture = ExtResource("3_k7y0f")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
@@ -121,30 +121,6 @@ offset_bottom = 575.0
 theme_override_font_sizes/font_size = 24
 text = "v0.0.1-alpha"
 label_settings = SubResource("LabelSettings_ofgbe")
-
-[node name="Far-grounds" type="Sprite2D" parent="."]
-position = Vector2(856, 600)
-texture = ExtResource("4_jhxj5")
-
-[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
-layer = -10
-follow_viewport_enabled = true
-
-[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground"]
-
-[node name="Clouds" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer"]
-texture_repeat = 2
-position = Vector2(576, 456)
-scale = Vector2(2.10294, 1.65678)
-texture = ExtResource("5_tmf63")
-
-[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground"]
-
-[node name="Sky" type="Sprite2D" parent="ParallaxBackground/ParallaxLayer2"]
-z_index = -20
-position = Vector2(576, 328)
-scale = Vector2(10.2143, 2.13158)
-texture = ExtResource("3_3kxqo")
 
 [node name="CodeBarbarian" type="Label" parent="."]
 layout_mode = 0

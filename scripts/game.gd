@@ -8,8 +8,8 @@ signal turn_ended  # Signal to indicate turn switch
 @onready var Deck: Deck = $Deck/Deck
 @onready var EnemySpawner = $EnemySpawner
 @onready var EffectHandler = $EffectHandler
-
 @onready var Player: Player = $Player
+@onready var Background: CanvasLayer = $Background
 
 var is_player_turn: bool = true
 var turn_number: int = 1
@@ -29,9 +29,7 @@ func _on_end_round_button_pressed():
 ## This needs to be fixed!
 ## BUG: We have a problem when drawing multiple cards, this function needs obvious refinement.
 func _on_player_draw_cards(amount):
-	if card_data.size() > 0:
-		var random_card_data = card_data[randi() % card_data.size()]	
-		Deck.add_card(random_card_data)
+	add_random_card()
 
 ## This function is used to start the player turn
 func start_player_turn():
@@ -51,8 +49,6 @@ func all_enemies_defeated() -> bool:
 			return false  # At least one enemy is still alive
 	return true  # All enemies are dead
 
-
-## BUG: Enemys turn show up, before starting new round... Easy fix... just fix it
 func end_player_turn():
 	is_player_turn = false  # Switch to enemy turn
 	Deck.clear_hand()  # Remove all cards from the deck
@@ -83,7 +79,7 @@ func _on_enemy_action(message: String):
 func start_new_round():
 	if !all_enemies_defeated():
 		return
-	
+	Background._update_background()
 	Round += 1
 	UI.update_ui_round(Round)
 	UI.show_message("Round " + str(Round) + " begins!")
@@ -105,7 +101,7 @@ func start_new_round():
 			enemy.enemy_action.connect(_on_enemy_action)
 
 	start_player_turn()
-
+	
 ## ----------------------------------------
 ## Load Character-Specific Deck
 ## ----------------------------------------
@@ -116,13 +112,10 @@ func _ready() -> void:
 		2:
 			load_card_data("res://files/elf_card_data.json")  # Elf Druid/Wizard
 		3:
-			load_card_data("res://files/demon_card_data.json")  # Demon Rogue
+			load_card_data("res://files/rogue_card_data.json")  # Demon Rogue
 	
 	Player.draw_cards_requested.connect(_on_player_draw_cards)
-	# Needs to be connecting when we actually have an active enemy --> Moving to the start first round!
-	#for enemy in active_enemies:
-		#enemy.enemy_action.connect(_on_enemy_action)
-
+	Background._update_background()
 
 ## ----------------------------------------
 ## Load Card Data from JSON
@@ -185,7 +178,7 @@ func StartFirstRound():
 	UI.update_ui_character(CharacterData["name"])
 	UI.update_ui_health(CharacterData["health"], CharacterData["health"])
 	UI.update_ui_energy(CharacterData["base_energy"], CharacterData["base_energy"])
-
+	
 ## ----------------------------------------
 ## On Enemy Selected
 ## ----------------------------------------
@@ -210,17 +203,9 @@ func get_target_enemy() -> Enemy:
 
 	return null  # No valid target available
 
-## ----------------------------------------
-## Start Round
-## ----------------------------------------
-func _on_start_round_button_pressed() -> void:
-	pass # This function has become redundant --- Remove?
-
-## ----------------------------------------
-## Draw Card Button
-## ----------------------------------------
-func _on_draw_card_button_pressed() -> void:
-	add_random_card()
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("action_pause_menu"):
+		GetPauseMenu()
 
 ## ----------------------------------------
 ## Handle Input (Mouse Click to Play Card)
@@ -275,7 +260,3 @@ func _on_player_armor_updated(amount: Variant) -> void:
 func _on_player_player_died() -> void:
 	UI.show_message("GAME OVER! You Died!")
 	await get_tree().create_timer(2.5).timeout  
-
-func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("action_pause_menu"):
-		GetPauseMenu()

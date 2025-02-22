@@ -4,10 +4,14 @@ extends Control
 @onready var CharacterDescriptionLabel : Label = $CharacterDescriptionLabel
 @onready var CharacterTypeLabel : Label = $CharacterTypeLabel
 @onready var CharacterHealthLabel : Label = $CharacterHPLabel
+@onready var PlayerSprite: Sprite2D = $PlayerSprite
 
 func _ready() -> void:
 	var Character = Characters.GetCharacter(1)
 	DisplayCharacterInformation(Character['name'], Character['type'], Character['description'], Character['health'], Character['base_energy'])
+	var texture = load(Character['image_path'])
+	if texture:
+		PlayerSprite.texture = texture
 
 func DisplayCharacterInformation(Name, Type, Description, Health, BaseEnergy) -> void:
 	CharacterNameLabel.set_text(str(Name))
@@ -25,13 +29,22 @@ func _on_character_1_button_pressed() -> void:
 	var Character = Characters.GetCharacter(1)
 	DisplayCharacterInformation(Character['name'], Character['type'], Character['description'], Character['health'], Character['base_energy'])
 	Gamevars.CharacterSelection = 1
+	var texture = load(Character['image_path'])
+	if texture:
+		PlayerSprite.texture = texture
 
 func _on_character_2_button_pressed() -> void:
 	var Character = Characters.GetCharacter(2)
 	DisplayCharacterInformation(Character['name'], Character['type'], Character['description'], Character['health'], Character['base_energy'])
 	Gamevars.CharacterSelection = 2
+	var texture = load(Character['image_path'])
+	if texture:
+		PlayerSprite.texture = texture
 	
 func _on_character_3_button_pressed() -> void:
 	var Character = Characters.GetCharacter(3)
 	DisplayCharacterInformation(Character['name'], Character['type'], Character['description'], Character['health'], Character['base_energy'])
 	Gamevars.CharacterSelection = 3
+	var texture = load(Character['image_path'])
+	if texture:
+		PlayerSprite.texture = texture
