@@ -3,6 +3,7 @@ extends Control
 @onready var game_title_label: Label = %GameTitleLabel
 @onready var studio_label: Label = %StudioLabel
 @onready var version_label: Label = %VersionLabel
+@onready var Sprite = $ParallaxBackground/ParallaxLayer/Clouds
 
 @export var ScrollSpeed = 15
 

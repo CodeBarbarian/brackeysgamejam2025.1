@@ -1,17 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cn45sa1hr0ypd"]
+[gd_scene load_steps=4 format=3 uid="uid://cn45sa1hr0ypd"]
 
 [ext_resource type="Script" path="res://scripts/menus/character_selection_menu.gd" id="1_7ooow"]
 [ext_resource type="Texture2D" uid="uid://dts0bexd1lsq6" path="res://assets/world/arena/CharacterSelection.png" id="2_tmv14"]
 [ext_resource type="Texture2D" uid="uid://spy5srl254ge" path="res://assets/characters/lizard_character.png" id="3_mq2va"]
-
-[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_51keo"]
-particle_flag_disable_z = true
-emission_shape = 1
-emission_sphere_radius = 19.69
-spread = 111.742
-gravity = Vector3(0, -100, 0)
-scale_max = 4.0
-color = Color(0.698039, 0.313726, 0, 1)
 
 [node name="CharacterSelectionMenu" type="Control"]
 layout_mode = 3
@@ -22,10 +13,10 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_7ooow")
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -10
 
-[node name="TextureRect" type="TextureRect" parent="UI"]
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -170,21 +161,6 @@ position = Vector2(584, 312)
 texture = ExtResource("3_mq2va")
 region_enabled = true
 region_rect = Rect2(64, 16, 192, 224)
-
-[node name="CPUParticles2D" type="GPUParticles2D" parent="."]
-position = Vector2(584, 88)
-amount = 50
-process_material = SubResource("ParticleProcessMaterial_51keo")
-
-[node name="CPUParticles2D2" type="GPUParticles2D" parent="."]
-position = Vector2(88, 88)
-amount = 50
-process_material = SubResource("ParticleProcessMaterial_51keo")
-
-[node name="CPUParticles2D3" type="GPUParticles2D" parent="."]
-position = Vector2(1064, 96)
-amount = 50
-process_material = SubResource("ParticleProcessMaterial_51keo")
 
 [connection signal="pressed" from="CharacterSelectionPanel/HBoxContainer/Character1Button" to="." method="_on_character_1_button_pressed"]
 [connection signal="pressed" from="CharacterSelectionPanel/HBoxContainer/Character2Button" to="." method="_on_character_2_button_pressed"]

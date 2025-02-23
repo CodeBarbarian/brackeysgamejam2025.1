@@ -1,17 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://bc1u1dx0ti6pr"]
 
 [ext_resource type="Script" path="res://scripts/enemy/enemy.gd" id="1_f3lly"]
-[ext_resource type="Texture2D" uid="uid://cyq7bmdewjcwe" path="res://assets/enemies/masked_small.png" id="2_wjnv1"]
+[ext_resource type="Texture2D" uid="uid://xsx1xtgnp30j" path="res://assets/enemies/slime.png" id="2_0gov5"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_8ijnw"]
 font_size = 12
 
 [node name="Enemy" type="Node2D"]
 script = ExtResource("1_f3lly")
-gold_drop = null
 
 [node name="EnemySprite" type="Sprite2D" parent="."]
-texture = ExtResource("2_wjnv1")
+texture = ExtResource("2_0gov5")
 flip_h = true
 region_enabled = true
 region_rect = Rect2(0, 16, 176, 224)

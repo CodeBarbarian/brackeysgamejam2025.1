@@ -48,15 +48,10 @@ func create_card_instance(card_info: Dictionary) -> Card:
 
 func clear_hand():
 	while player_deck.size() > 0:
-		var card = player_deck.pop_back()
-		remove_child(card)  # Remove from scene tree
+		var card = player_deck.pop_back()  # Remove the last card in the list
+		remove_child(card)  # Remove it from the scene
 		card.queue_free()  # Free memory
-
-	# Debugging output
-	print("[DEBUG] Cleared deck. Remaining cards: ", player_deck.size())
-
-	reorder_cards()  # Ensures layout updates after clearing
-
+	reorder_cards()  # Update the layout after clearing
 
 ## Add Card to the Player Deck
 func add_card(card_info: Dictionary):
@@ -93,16 +88,11 @@ func remove_card(index: int) -> Node2D:
 
 ## Reorder player deck
 func reorder_cards():
-	var card_spread = min(angle_limit / max(player_deck.size(), 1) * 1.3, max_card_spread_angle)
-	var current_angle = -(card_spread * (player_deck.size() - 1)) / 2 - 90
-
+	var card_spread = min(angle_limit / player_deck.size() * 1.3, max_card_spread_angle)
+	var current_angle = -(card_spread * (player_deck.size() -1))/2 - 90
 	for card in player_deck:
 		_card_transform_update(card, current_angle)
 		current_angle += card_spread
-
-	# Debugging output
-	print("[DEBUG] Reordered deck. Current card count: ", player_deck.size())
-
 
 ## Helper function to transform the position and rotation compared to the collision shape and the other cards
 func _card_transform_update(card: Node2D, angle_in_drag: float):

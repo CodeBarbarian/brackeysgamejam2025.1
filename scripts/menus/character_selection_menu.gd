@@ -5,7 +5,6 @@ extends Control
 @onready var CharacterTypeLabel : Label = $CharacterTypeLabel
 @onready var CharacterHealthLabel : Label = $CharacterHPLabel
 @onready var PlayerSprite: Sprite2D = $PlayerSprite
-@onready var UI: CanvasLayer = $UI
 
 func _ready() -> void:
 	var Character = Characters.GetCharacter(1)
@@ -21,7 +20,7 @@ func DisplayCharacterInformation(Name, Type, Description, Health, BaseEnergy) ->
 	CharacterHealthLabel.set_text(str(Health))
 
 func _on_embark_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://scenes/introduction.tscn")
+	get_tree().change_scene_to_packed(Config.GameScene)
 
 func _on_back_button_pressed() -> void:
 	get_tree().change_scene_to_packed(Config.StartMenuScene)

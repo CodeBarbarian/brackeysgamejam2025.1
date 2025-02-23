@@ -14,7 +14,6 @@ extends Node
 @onready var OptionsMenuScene = preload("res://scenes/menus/options_menu.tscn")
 @onready var PauseMenuScene = preload("res://scenes/menus/pause_menu.tscn")
 @onready var CharacterSelectionMenuScene = preload("res://scenes/menus/character_selection_menu.tscn")
-@onready var GameOverScene = preload("res://scenes/menus/game_over.tscn")
 
 # Preload the Game Scene
 @onready var GameScene = preload("res://scenes/game.tscn")

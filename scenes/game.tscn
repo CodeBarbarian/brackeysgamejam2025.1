@@ -34,10 +34,10 @@ position = Vector2(896, 256)
 z_index = -1
 
 [node name="EndRoundButton" type="Button" parent="."]
-offset_left = 530.0
-offset_top = 200.0
-offset_right = 658.0
-offset_bottom = 319.0
+offset_left = 528.0
+offset_top = 328.0
+offset_right = 618.0
+offset_bottom = 359.0
 text = "END TURN"
 
 [node name="Timer" type="Timer" parent="."]

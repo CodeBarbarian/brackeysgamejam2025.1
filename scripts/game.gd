@@ -26,139 +26,83 @@ func _on_end_round_button_pressed():
 		emit_signal("turn_ended")  # Emit signal for enemy turn
 		end_player_turn()
 	
-## Player Draw Cards
+## This needs to be fixed!
+## BUG: We have a problem when drawing multiple cards, this function needs obvious refinement.
 func _on_player_draw_cards(amount):
-	for n in amount:
-		add_random_card()
+	add_random_card()
 
-## Start player turn
+## This function is used to start the player turn
 func start_player_turn():
-	print("[DEBUG] Starting player turn...")
 	is_player_turn = true
 	turn_number += 1
 	UI.update_ui_turn(turn_number)
-	UI.show_message("Player's turn!")
-
-	# Refresh player UI immediately
-	UI.update_ui_health(Player.current_hp, Player.max_hp)
-	UI.update_ui_energy(Player.current_energy, Player.max_energy)
-	UI.update_ui_armor(Player.armor)
-
+	UI.show_message("Player's turn!")  # NEW MESSAGE
+	
 	Player.start_turn()  # Reset energy or resources
 
-	# Ensure deck is cleared before refilling
-	Deck.clear_hand()
-	await get_tree().process_frame  # Ensures deck clears before refilling
-
-	# Forcefully add new cards and ensure visibility
-	for n in 5:
+	for n in 5:  # Draw 5 new cards
 		add_random_card()
-
-	# Debugging output
-	print("[DEBUG] Player turn started. Deck count: ", Deck.get_child_count())
-
 
 func all_enemies_defeated() -> bool:
 	for enemy in active_enemies:
 		if !enemy.is_dead():
 			return false  # At least one enemy is still alive
 	return true  # All enemies are dead
-	
+
 func end_player_turn():
-	is_player_turn = false
-	Deck.clear_hand()
-
+	is_player_turn = false  # Switch to enemy turn
+	Deck.clear_hand()  # Remove all cards from the deck
+	
 	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy) and not enemy.is_dead())
-
+	
 	if active_enemies.is_empty():
-		print("[DEBUG] No enemies remaining, starting a new round...")
 		start_new_round()
 		return
-
+	
 	for enemy in active_enemies:
 		if enemy.has_method("take_turn"):
 			UI.show_message("Enemy's Turn!")
 			enemy.take_turn(Player)
-
-	await get_tree().create_timer(2.0).timeout
-
+	
+	# Wait for enemies to finish their actions before switching turns
+	await get_tree().create_timer(2.0).timeout  # Delay for animations
+	
 	if all_enemies_defeated():
-		print("[DEBUG] All enemies defeated. Restarting new round...")
 		start_new_round()
 	else:
-		print("[DEBUG] Resuming player turn...")
 		start_player_turn()
+
 func _on_enemy_action(message: String):
 	UI.show_message(message)
-	
-func respawn_saved_enemies():
-	print("[INFO] Respawning saved enemies...")
-	active_enemies.clear()
-
-	for enemy_data in Gamevars.load_enemy_state():
-		var enemy = preload("res://scenes/enemy/enemy.tscn").instantiate()
-
-		EnemySpawner.add_child(enemy)
-		print("[DEBUG] Added restored enemy to EnemySpawner.")
-
-		enemy.restore_state(enemy_data)
-
-		enemy.enemy_action.connect(_on_enemy_action)
-		enemy.armor_updated.connect(_on_enemy_armor_updated)
-		enemy.health_updated.connect(_on_enemy_health_updated)
-
-		await get_tree().process_frame
-		enemy.emit_signal("health_updated", enemy.current_hp, enemy.max_hp)
-		enemy.emit_signal("armor_updated", enemy.armor)
-
-		active_enemies.append(enemy)
-		print("[DEBUG] Enemy fully restored and linked to EnemySpawner.")
-
-	print("[INFO] Respawn complete! UI should now update.")
-
-
-func restore_round():
-	if Gamevars.CurrentRound > 1:
-		Round = Gamevars.CurrentRound
-	elif Round == 1:
-		Round = 1  # Default to round 1 if no saved data
-	#else:
-		#Round += 1  # Prevent Round from being locked
-
 
 func start_new_round():
-	print("[INFO] Starting new round... Current active enemies: ", active_enemies.size())
-
-	restore_round()
-	Round += 1  # Ensure round is properly updated
+	if !all_enemies_defeated():
+		return
+	Background._update_background()
+	Round += 1
+	turn_number = 0
 	UI.update_ui_round(Round)
+	UI.show_message("Round " + str(Round) + " begins!")
 
-	await EnemySpawner.clear_enemies()
-	print("[DEBUG] Enemy list cleared. Remaining count: ", active_enemies.size())
+	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy))
 
-	if !Gamevars.SavedEnemies.is_empty():
-		active_enemies = await respawn_saved_enemies()
+	# Clear defeated enemies
+	EnemySpawner.clear_enemies()
+	active_enemies.clear()
+	
+	if Round % 5 == 0:
+		active_enemies = EnemySpawner.spawn_boss()
 	else:
-		print("[DEBUG] Checking for boss spawn, Current Round: ", Round)
-		print("[DEBUG] Spawning normal enemies for Round: " + str(Round))
-		active_enemies = await EnemySpawner.spawn_enemies()
-
-	print("[INFO] New round started. Enemies spawned: ", active_enemies.size())
-
-	# Ensure UI updates by forcing a refresh for each enemy
+		# Spawn new enemies
+		active_enemies = EnemySpawner.spawn_enemies()
+		
 	for enemy in active_enemies:
-		if enemy.has_signal("health_updated"):
-			enemy.health_updated.connect(_on_enemy_health_updated)
-		if enemy.has_signal("armor_updated"):
+		if enemy.has_signal("enemy_action"):
+			enemy.enemy_action.connect(_on_enemy_action)
 			enemy.armor_updated.connect(_on_enemy_armor_updated)
+			enemy.health_updated.connect(_on_enemy_health_updated)
 
-		await get_tree().process_frame  # Ensure UI updates before starting turn
-		enemy.emit_signal("health_updated", enemy.current_hp, enemy.max_hp)
-		enemy.emit_signal("armor_updated", enemy.armor)
-
-	await get_tree().process_frame  # Ensures enemies are fully initialized before starting turn
 	start_player_turn()
-
 
 func _on_enemy_armor_updated(current: Variant):
 	UI.update_ui_enemy_armor(current)
@@ -179,9 +123,7 @@ func _ready() -> void:
 			load_card_data("res://files/rogue_card_data.json")  # Demon Rogue
 	
 	Player.draw_cards_requested.connect(_on_player_draw_cards)
-	
 	Background._update_background()
-
 
 ## ----------------------------------------
 ## Load Card Data from JSON
@@ -302,21 +244,22 @@ func _on_player_health_updated(current_hp: Variant, max_hp: Variant) -> void:
 func _on_timer_timeout() -> void:
 	if RoundFinished:
 		StartFirstRound()
-		UI.update_ui_round(Round)  # UI should update but NOT increment the round
+		if Round > 1:
+			Round += 1
+		RoundFinished = false
+		UI.update_ui_round(Round)
 		UI.show_message("Player begins!")
-
-		if !Gamevars.SavedEnemies.is_empty():
-			print("[DEBUG] Restoring saved enemies instead of spawning new ones.")
-			await respawn_saved_enemies()
-		else:
-			print("[DEBUG] No saved enemies found, spawning new ones.")
-			active_enemies = await EnemySpawner.spawn_enemies()
-
-		RoundFinished = false  # Prevents multiple increments
-
-		await get_tree().process_frame  
+		
+		# Spawn Enemies
+		active_enemies = EnemySpawner.spawn_enemies()
+		
+		for enemy in active_enemies:
+			if enemy.has_signal("enemy_action"):
+				enemy.enemy_action.connect(_on_enemy_action)
+				enemy.armor_updated.connect(_on_enemy_armor_updated)
+				enemy.health_updated.connect(_on_enemy_health_updated)
+				
 		start_player_turn()
-
 
 func _on_player_energy_updated(current_energy: Variant, max_energy: Variant) -> void:
 	UI.update_ui_energy(current_energy, max_energy)
@@ -324,17 +267,7 @@ func _on_player_energy_updated(current_energy: Variant, max_energy: Variant) -> 
 func _on_player_armor_updated(amount: Variant) -> void:
 	UI.update_ui_armor(amount)
 
-func _on_player_player_died():
-	Gamevars.CurrentRound = Round
-	Gamevars.save_enemy_state(active_enemies)
-
-	await get_tree().create_timer(5).timeout
-	get_tree().change_scene_to_packed(Config.GameOverScene)
-
-	if is_instance_valid(UI):
-		UI.update_ui_enemy_health(0, 1)
-		UI.update_ui_enemy_armor(0)
-	else:
-		print("[WARNING] UI reference is invalid after restart!")
-
-	print("[INFO] UI reset after game over. Ready for new game.")
+## Take us to the game over screen!
+func _on_player_player_died() -> void:
+	UI.show_message("GAME OVER! You Died!")
+	await get_tree().create_timer(2.5).timeout  

@@ -4,7 +4,7 @@ extends Node
 var characters = {
 	1: {
 		"Name": "Brutus",
-		"Type": "Lizard Brute",
+		"Type": "Lizard/Brute",
 		"Description": "A lizard brute with extreme strength",
 		"Health": 60,
 		"BaseEnergy": 3,
@@ -12,7 +12,7 @@ var characters = {
 	},
 	2: {
 		"Name": "Oracle",
-		"Type": "Elf Druid",
+		"Type": "Wizard/Druid",
 		"Description": "An elf druid with the power of nature",
 		"Health": 40,
 		"BaseEnergy": 3,
@@ -20,7 +20,7 @@ var characters = {
 	},
 	3: {
 		"Name": "Lucious",
-		"Type": "Demon Rogue",
+		"Type": "Demon/Imp Rogue",
 		"Description": "A demon rogue with the ability to cast from the shadows",
 		"Health": 55,
 		"BaseEnergy": 3,
