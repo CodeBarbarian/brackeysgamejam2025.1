@@ -18,10 +18,8 @@ layer = -10
 layer = 5
 
 [node name="UI" parent="UserInterface" instance=ExtResource("2_u0ckk")]
-unique_name_in_owner = true
 
 [node name="Deck" type="CanvasLayer" parent="."]
-layer = 10
 
 [node name="Deck" parent="Deck" instance=ExtResource("2_xserp")]
 position = Vector2(555, 1472)
@@ -30,9 +28,10 @@ position = Vector2(555, 1472)
 position = Vector2(264, 280)
 
 [node name="EnemySpawner" parent="." instance=ExtResource("6_v71v1")]
-position = Vector2(896, 280)
+position = Vector2(896, 256)
 
 [node name="EffectHandler" parent="." instance=ExtResource("6_au43l")]
+z_index = -1
 
 [node name="EndRoundButton" type="Button" parent="."]
 offset_left = 528.0

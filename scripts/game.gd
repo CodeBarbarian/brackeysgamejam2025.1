@@ -12,7 +12,7 @@ signal turn_ended  # Signal to indicate turn switch
 @onready var Background: CanvasLayer = $Background
 
 var is_player_turn: bool = true
-var turn_number: int = 1
+var turn_number: int = 0
 
 var Round: int = 1
 var RoundFinished = true
@@ -53,7 +53,6 @@ func end_player_turn():
 	is_player_turn = false  # Switch to enemy turn
 	Deck.clear_hand()  # Remove all cards from the deck
 	
-	
 	active_enemies = active_enemies.filter(func(enemy): return is_instance_valid(enemy) and not enemy.is_dead())
 	
 	if active_enemies.is_empty():
@@ -81,6 +80,7 @@ func start_new_round():
 		return
 	Background._update_background()
 	Round += 1
+	turn_number = 0
 	UI.update_ui_round(Round)
 	UI.show_message("Round " + str(Round) + " begins!")
 
@@ -99,9 +99,17 @@ func start_new_round():
 	for enemy in active_enemies:
 		if enemy.has_signal("enemy_action"):
 			enemy.enemy_action.connect(_on_enemy_action)
+			enemy.armor_updated.connect(_on_enemy_armor_updated)
+			enemy.health_updated.connect(_on_enemy_health_updated)
 
 	start_player_turn()
-	
+
+func _on_enemy_armor_updated(current: Variant):
+	UI.update_ui_enemy_armor(current)
+
+func _on_enemy_health_updated(current: Variant, max_hp: Variant):
+	UI.update_ui_enemy_health(current, max_hp)
+
 ## ----------------------------------------
 ## Load Character-Specific Deck
 ## ----------------------------------------
@@ -204,7 +212,8 @@ func get_target_enemy() -> Enemy:
 	return null  # No valid target available
 
 func _process(delta: float) -> void:
-	if Input.is_action_just_pressed("action_pause_menu"):
+	if Input.is_action_pressed("action_pause_menu"):
+		print("PAUSE MENU CALLED!")
 		GetPauseMenu()
 
 ## ----------------------------------------
@@ -247,6 +256,8 @@ func _on_timer_timeout() -> void:
 		for enemy in active_enemies:
 			if enemy.has_signal("enemy_action"):
 				enemy.enemy_action.connect(_on_enemy_action)
+				enemy.armor_updated.connect(_on_enemy_armor_updated)
+				enemy.health_updated.connect(_on_enemy_health_updated)
 				
 		start_player_turn()
 

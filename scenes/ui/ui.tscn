@@ -1,19 +1,18 @@
-[gd_scene load_steps=9 format=3 uid="uid://brctybhyykuit"]
+[gd_scene load_steps=10 format=3 uid="uid://brctybhyykuit"]
 
 [ext_resource type="Script" path="res://scripts/ui/ui.gd" id="1_7e160"]
 [ext_resource type="Texture2D" uid="uid://balkfrhyl3745" path="res://assets/UI/HealthBarPanel_160x41.png" id="1_rwt68"]
 [ext_resource type="Texture2D" uid="uid://bxn8sbjsvg3ej" path="res://assets/UI/ValueBar_128x16.png" id="2_rftfv"]
 [ext_resource type="Texture2D" uid="uid://bpvy2hhtpjwhx" path="res://assets/UI/HeartIcons_32x32.png" id="5_42c0s"]
+[ext_resource type="Texture2D" uid="uid://cb46gy7el8al6" path="res://assets/UI/ItemsIcons_24x24.png" id="6_d1ggv"]
 [ext_resource type="Texture2D" uid="uid://dy75c6sj51jt6" path="res://assets/UI/BlackBigCircleBoxWithBorder_27x27.png" id="6_yxnji"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f4x6k"]
 font_size = 10
-font_color = Color(0.999983, 0.19934, 0.301422, 1)
 shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_prhs0"]
 font_size = 10
-font_color = Color(0.497151, 0.802557, 0.3476, 1)
 shadow_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_rdiwj"]
@@ -32,6 +31,30 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 script = ExtResource("1_7e160")
+
+[node name="Debug" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="CharacterLabel" type="Label" parent="Debug"]
+z_index = 20
+layout_mode = 0
+offset_left = 290.0
+offset_top = 20.0
+offset_right = 430.0
+offset_bottom = 43.0
+text = "BRUTUS"
+horizontal_alignment = 1
+
+[node name="ArmorLabel" type="Label" parent="Debug"]
+z_index = 10
+layout_mode = 0
+offset_left = 238.0
+offset_top = 20.0
+offset_right = 278.0
+offset_bottom = 43.0
+text = "0"
 
 [node name="StatusBar" type="Node2D" parent="."]
 
@@ -92,35 +115,39 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="RoundLabel" type="Label" parent="UIPanel/RoundControl"]
+z_index = 100
 layout_mode = 0
-offset_left = 392.0
-offset_top = 8.0
-offset_right = 460.0
-offset_bottom = 31.0
+offset_left = 460.0
+offset_top = 20.0
+offset_right = 528.0
+offset_bottom = 43.0
 text = "Round:"
 
 [node name="CurrentRoundLabel" type="Label" parent="UIPanel/RoundControl"]
+z_index = 100
 layout_mode = 0
-offset_left = 448.0
-offset_top = 8.0
-offset_right = 488.0
-offset_bottom = 31.0
+offset_left = 518.0
+offset_top = 20.0
+offset_right = 558.0
+offset_bottom = 43.0
 text = "0"
 
 [node name="TurnLabel" type="Label" parent="UIPanel/RoundControl"]
+z_index = 100
 layout_mode = 0
-offset_left = 404.0
-offset_top = 30.0
-offset_right = 445.0
-offset_bottom = 53.0
+offset_left = 552.0
+offset_top = 20.0
+offset_right = 593.0
+offset_bottom = 43.0
 text = "Turn:"
 
 [node name="CurrentTurnLabel" type="Label" parent="UIPanel/RoundControl"]
+z_index = 100
 layout_mode = 0
-offset_left = 448.0
-offset_top = 32.0
-offset_right = 488.0
-offset_bottom = 55.0
+offset_left = 597.0
+offset_top = 20.0
+offset_right = 637.0
+offset_bottom = 43.0
 text = "0"
 
 [node name="HealthEnergy" type="Control" parent="UIPanel"]
@@ -148,43 +175,6 @@ offset_bottom = 55.0
 text = "0/0"
 label_settings = SubResource("LabelSettings_prhs0")
 
-[node name="Debug" type="Control" parent="UIPanel"]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Character" type="Label" parent="UIPanel/Debug"]
-layout_mode = 0
-offset_left = 528.0
-offset_top = 8.0
-offset_right = 618.0
-offset_bottom = 31.0
-text = "Character:"
-
-[node name="CharacterLabel" type="Label" parent="UIPanel/Debug"]
-layout_mode = 0
-offset_left = 616.0
-offset_top = 8.0
-offset_right = 785.0
-offset_bottom = 31.0
-text = "NAME OF CHARACTER"
-
-[node name="Armor" type="Label" parent="UIPanel/Debug"]
-layout_mode = 0
-offset_left = 528.0
-offset_top = 32.0
-offset_right = 568.0
-offset_bottom = 55.0
-text = "Player Armor:"
-
-[node name="ArmorLabel" type="Label" parent="UIPanel/Debug"]
-layout_mode = 0
-offset_left = 640.0
-offset_top = 32.0
-offset_right = 680.0
-offset_bottom = 55.0
-text = "0"
-
 [node name="MessageLabel" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 8
@@ -201,3 +191,94 @@ grow_vertical = 2
 text = "EXAMPLE TEXT"
 label_settings = SubResource("LabelSettings_rdiwj")
 horizontal_alignment = 1
+
+[node name="HealthBarPanel160x41" type="Sprite2D" parent="."]
+position = Vector2(231, 32)
+scale = Vector2(0.5625, 1)
+texture = ExtResource("1_rwt68")
+
+[node name="ItemsIcons24x24" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(208, 32)
+texture = ExtResource("6_d1ggv")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="BlackBigCircleBoxWithBorder27x27" type="Sprite2D" parent="."]
+position = Vector2(209, 32)
+texture = ExtResource("6_yxnji")
+
+[node name="HealthBarPanel160x42" type="Sprite2D" parent="."]
+position = Vector2(360, 31)
+texture = ExtResource("1_rwt68")
+
+[node name="HealthBarPanel160x43" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(491.5, 32)
+scale = Vector2(0.59375, 1)
+texture = ExtResource("1_rwt68")
+
+[node name="HealthBarPanel160x44" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(580.75, 32)
+scale = Vector2(0.465625, 1)
+texture = ExtResource("1_rwt68")
+
+[node name="HealthBarPanel160x45" type="Sprite2D" parent="."]
+z_index = -10
+position = Vector2(1062, 32)
+texture = ExtResource("1_rwt68")
+
+[node name="BlackBigCircleBoxWithBorder27x28" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(1118, 32)
+texture = ExtResource("6_yxnji")
+
+[node name="HeartIcons32x32" type="Sprite2D" parent="."]
+z_index = 10
+position = Vector2(1118, 33)
+texture = ExtResource("5_42c0s")
+
+[node name="HealthBarPanel160x46" type="Sprite2D" parent="."]
+position = Vector2(936.5, 32)
+scale = Vector2(0.53125, 1)
+texture = ExtResource("1_rwt68")
+
+[node name="BlackBigCircleBoxWithBorder27x29" type="Sprite2D" parent="."]
+position = Vector2(956, 32)
+texture = ExtResource("6_yxnji")
+
+[node name="ItemsIcons24x25" type="Sprite2D" parent="."]
+position = Vector2(957, 32)
+texture = ExtResource("6_d1ggv")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="EnemyHealthBar" type="ProgressBar" parent="."]
+modulate = Color(1, 0, 0, 1)
+layout_mode = 0
+offset_left = 989.0
+offset_top = 17.0
+offset_right = 1107.0
+offset_bottom = 47.0
+step = 1.0
+value = 100.0
+fill_mode = 1
+show_percentage = false
+
+[node name="EnemyHealthLabel" type="Label" parent="."]
+z_index = 10
+layout_mode = 0
+offset_left = 1029.0
+offset_top = 20.0
+offset_right = 1072.0
+offset_bottom = 43.0
+text = "10/10"
+
+[node name="EnemyArmorLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 910.0
+offset_top = 20.0
+offset_right = 950.0
+offset_bottom = 43.0
+text = "0"

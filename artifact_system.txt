@@ -1,0 +1,93 @@
+
+#Imp Rogue
+
+- Lethal Toxins = P) "Cooking up poisonous cocktails for a long time has led you to discover a lethal dose! If you kill an enemy with poison, it explodes dealing its Max HP's worth damage to all other enemies"
+
+N1) "This poison is perhaps too effective, disintegrating the body completely. Enemies killed through poison no longer drop gold"
+
+N2) "Working with poisons so long has exposed you to them for an unhealthy amount. Every time you kill an enemy through poison, lose 1 Max HP"
+
+N3) "Being exposed to the chemicals so much has weakened your senses. Start every combat with 2 Cripple"
+
+- Pickpocketer = P) "You have found a way to steal from your enemies more efficiently. Enemies killed drop 15% more gold"
+
+N1) "Focusing so much on the enemies' valuables has made you complacent, making you neglect your own. At the end of your turn, there's a 50% chance you discard a card in your hand instead of shuffling it into the shuffle-pile with the rest"
+
+N2) "You now have more money through pillaging than you know what to do with! After every combat, there's a 50% you lose 20% of your gold
+
+N3) "Your purse's getting quite big. You can only carry a maximum of 200 gold with you"
+
+- Master of Stealth "Learning to blend to your surroundings better, you've become practically invisible! 50% chance to dodge enemy attacks"
+
+N1) "As a response, your enemies have learned to detect you better. Gain a permanent Bleed that cannot be cleansed"
+
+N2) "Hmmn, where was that resting place again? You're no longer able to heal at resting-sites"
+
+N3) "Now, nobody sees you . . . 50% to skip an encounter"
+
+- Potion Belt = P) "You've made quite an useful expansion to your potion-carrying case, doubling its capacity! You can now carry 6 potions instead of 3"
+
+N1) "The Shopkeeper finds your new potion-belt suspicious, and is distrusting of you now. You're no longer able to buy potions in the shop"
+
+N2) "Drinking so many potions all the time can cause weird side-effects. Drinking a potion has a chance to harm you instead!"
+
+N3) "You stink of potions due to their over-usage, yuck! You're no longer able to gain the Master of Stealth -power"
+
+Cardbattler Powers:
+
+P = Positive Effect N = Negative Effect
+
+Lizard Brute:
+-  Sharpened Scales = P) “Sharp scales protrude out of your skin, causing enemies to take thorns-damage every time they hit you” 
+
+N1) “This transformation is quite painful for you ~ -5 MAX HP” 
+
+N2) “The scales are quite large, and difficult to maneuver around in. Every time you use a card that blocks, you’re only able to perform block-actions for the rest of the turn” 
+
+N3) “It seems that this mutation was quite premature. After five combats, these brittle spikes will shatter, and will not regrow”
+
+- Armaments = P) "Defense is the best offense! Every time you gain block, deal that much damage to a random enemy"
+
+N1) "This, however, makes your armor wear off pretty fast . . . You gain 50% less armor from all sources"
+
+N2) "Due to you having augmented your armour to be heavier for it to be able to hit and take hits, it has begun slowing you down. Your attack-cards deal 25% less damage"
+
+N3)  "Your armor is no longer good for anything other than bashing. You can no longer gain block for it to be used defensively"
+
+- Bloodlust = P) "You have developed an "acquired taste" for your enemies' life-essence. Every attack heals you for 2 HP"
+
+N1) "The bloodlust consumes you! You're no longer able to heal through any other means"
+
+N2) " . . . it still doesn't taste the best, though. You have a 50% chance to heal from every attack"
+
+N3) "Constantly reeking of blood terrifies others. Shopkeeper only sells you certain items and chance-encounters force you to take the worst options"
+
+- Weapon Master = P) "You've become quite proficient in your craft. Start every fight with +2 strength"
+
+N1) "So good in fact that you've forgotten about everything else! The turn you use an attack-card, you're unable to use any other type of a card"
+
+N2) "You've become obsessed with weapons! Reward-screen only gives you attack-cards"
+
+N3) "After experimenting with different weapons, you've come to realise your own is no longer enough. You're unable to use Slashes"
+
+Cardbattler Powers3
+
+P = Positive Effect N = Negative Effect
+
+Elf Wizard:
+
+- Magic Codex = P) "Through rigorous research, you have unlocked the secrets of magicks. Whenever you play a card with an element in its name, a random card in your hand costs 0"
+
+N1) "Some of the words in the nomicom still don't entirely make sense to you, though. Whenever you play a card with an element in its name, move a random card in your hand to the shuffle pile"
+
+N2) "Maybe such magic is too strong for a mortal. You can only play five cards per turn"
+
+N3) "There is a price for such power! This effect will also make another random card cost 4 until the end of the battle"
+
+- Faery Help! = P) "You've got a new pixie helper. Whenever you play a card, there's a 50% chance it gets cast twice"
+
+N1) "This faery still needs a bit training though. Whenever you play a card, there's a 25% chance it gets discarded"
+
+N2) "Controlling this fae takes a lot of effort! Decrease your maximum energy by 1"
+
+N3) "This faery is still just a wee baby, it still needs a lot of rest! Whenever a card is made to cast twice, "Faery Help!" needs two combats to recharge"

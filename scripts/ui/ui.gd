@@ -6,9 +6,12 @@ extends Control
 @onready var HealthBar: ProgressBar = $StatusBar/HealthValueBar/HealthValue
 @onready var EnergyLabel: Label = $UIPanel/HealthEnergy/Energy
 @onready var EnergyBar: ProgressBar = $StatusBar/EnergyValueBar/EnergyValue
-@onready var CharacterLabel: Label = $UIPanel/Debug/CharacterLabel
-@onready var ArmorLabel: Label = $UIPanel/Debug/ArmorLabel
+@onready var CharacterLabel: Label = $Debug/CharacterLabel
+@onready var ArmorLabel: Label = $Debug/ArmorLabel
 @onready var MessageLabel: Label = $MessageLabel
+@onready var EnemyHealthBar: ProgressBar = $EnemyHealthBar
+@onready var EnemyHealthLabel: Label = $EnemyHealthLabel
+@onready var EnemyArmorLabel: Label = $EnemyArmorLabel
 
 var message_queue: Array = []  # Store messages to display
 
@@ -38,6 +41,14 @@ func update_ui_character(character: String) -> void:
 
 func update_ui_armor(armor: int) -> void:
 	ArmorLabel.set_text(str(armor))
+
+func update_ui_enemy_health(current: int, max_hp: int):
+	$EnemyHealthBar.max_value = max_hp
+	$EnemyHealthBar.set_value(current)
+	$EnemyHealthLabel.set_text(str(current) +  "/" + str(max_hp))
+
+func update_ui_enemy_armor(current: int):
+	$EnemyArmorLabel.set_text(str(current))
 
 func show_message(text: String):
 	message_queue.append(text)

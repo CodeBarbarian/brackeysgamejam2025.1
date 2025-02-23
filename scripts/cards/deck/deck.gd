@@ -16,7 +16,6 @@ var player_deck: Array = []
 var touched: Array = []
 var current_selected_card_index: int = -1
 
-
 func create_card_instance(card_info: Dictionary) -> Card:
 	var card_instance = CardScene.instantiate() as Card
 	
@@ -31,7 +30,7 @@ func create_card_instance(card_info: Dictionary) -> Card:
 			# Get image path from card_info (default to a placeholder if missing)
 			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")
 		2:
-			image_path = "res://assets/cards/lizard/" + card_info.get("image_name", "default.png")	
+			image_path = "res://assets/cards/elf/" + card_info.get("image_name", "default.png")	
 		3:
 			image_path = "res://assets/cards/rogue/" + card_info.get("image_name", "default.png")
 		_:

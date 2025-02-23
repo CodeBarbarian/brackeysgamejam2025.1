@@ -92,7 +92,7 @@ func heal(amount: int):
 # Add armor to the player
 func add_armor(amount: int):
 	armor += amount
-	emit_signal("armor_updated", amount)
+	emit_signal("armor_updated", armor)
 	print("[INFO] Player gained " + str(amount) + " armor. Current armor: " + str(armor))
 
 # Remove all armor
