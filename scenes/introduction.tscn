@@ -1,0 +1,112 @@
+[gd_scene load_steps=4 format=3 uid="uid://dxi0upoos3nfg"]
+
+[ext_resource type="Script" path="res://scripts/introduction.gd" id="1_tklum"]
+[ext_resource type="Texture2D" uid="uid://dts0bexd1lsq6" path="res://assets/world/arena/CharacterSelection.png" id="2_uq2kg"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_elxso"]
+particle_flag_disable_z = true
+emission_shape = 1
+emission_sphere_radius = 19.69
+spread = 111.742
+gravity = Vector3(0, -100, 0)
+scale_max = 4.0
+color = Color(0.698039, 0.313726, 0, 1)
+
+[node name="Introduction" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_tklum")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_uq2kg")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -448.0
+offset_top = -196.0
+offset_right = 448.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="IntroductionText" type="RichTextLabel" parent="Panel"]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 888.0
+offset_bottom = 288.0
+text = "Welcome to Mojo World, the card game that is inspired by both Magic The Gathering, Slay The Spire, and countless others. You have 3 energy to play with (each round), cards cost energy (you can keep track of them in the hud)
+
+The difference between this card game, and other card games, is that this will go on for eternity.
+
+To play the game:
+1. Select a card to play, play it.
+2. When you have played all cards you can. End your turn.
+3. Repeat.
+
+When you have killed your first monster, you will meet your next monster (Might be a little bit tougher)."
+
+[node name="LetsPlayButton" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = 144.0
+offset_right = 45.0
+offset_bottom = 175.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lets Play"
+
+[node name="ChangeCharacter" type="Button" parent="Panel"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -64.0
+offset_top = 104.0
+offset_right = 83.0
+offset_bottom = 135.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Change Character"
+
+[node name="CPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(584, 88)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_elxso")
+
+[node name="CPUParticles2D2" type="GPUParticles2D" parent="."]
+position = Vector2(88, 88)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_elxso")
+
+[node name="CPUParticles2D3" type="GPUParticles2D" parent="."]
+position = Vector2(1064, 96)
+amount = 50
+process_material = SubResource("ParticleProcessMaterial_elxso")
+
+[connection signal="pressed" from="Panel/LetsPlayButton" to="." method="_on_lets_play_button_pressed"]
+[connection signal="pressed" from="Panel/ChangeCharacter" to="." method="_on_change_character_pressed"]
