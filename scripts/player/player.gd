@@ -20,7 +20,7 @@ signal relic_triggered(relic_name)
 var status_effects: Dictionary = {}  
 var relics: Dictionary = {}  
 
-# 💠 **Energy Management**
+## Energy Management
 func spend_energy(amount: int) -> bool:
 	if current_energy >= amount:
 		current_energy -= amount
@@ -28,6 +28,8 @@ func spend_energy(amount: int) -> bool:
 		return true
 	return false
 
+
+## Ready function
 func _ready() -> void:
 	var CharacterData = Characters.GetCharacter(Gamevars.CharacterSelection)
 	max_hp = CharacterData["health"]
@@ -39,17 +41,18 @@ func _ready() -> void:
 	if texture:
 		PlayerSprite.texture = texture
 
-# 🔄 **Relic System**
+## Relic System
 func add_relic(relic_name: String, level: int = 1):
 	relics[relic_name] = level
 	print("[INFO] Relic Added: " + relic_name + " (Level " + str(level) + ")")
 
+## Remove relic
 func remove_relic(relic_name: String):
 	if relics.has(relic_name):
 		relics.erase(relic_name)
 		print("[INFO] Relic Removed: " + relic_name)
 
-# ✅ **Status Effects**
+## Status Effects
 func apply_status(effect_name: String, amount: int, permanent: bool = false):
 	if status_effects.has(effect_name):
 		status_effects[effect_name] += amount
@@ -63,11 +66,12 @@ func apply_status(effect_name: String, amount: int, permanent: bool = false):
 	elif effect_name == "strength":
 		modify_strength(amount)
 
+## Modify Strength
 func modify_strength(amount: int):
 	strength += amount
 	print("[INFO] Player strength changed by " + str(amount) + ". New strength: " + str(strength))
 
-# ✅ **Relic Application Logic**
+## Relic Logic
 func apply_relics(trigger: String, target = null):
 	for relic in relics.keys():
 		var level = relics[relic]
@@ -125,7 +129,7 @@ func apply_relics(trigger: String, target = null):
 
 		emit_signal("relic_triggered", relic)
 
-# ✅ **Armor Handling**
+## Armor Handling
 func add_armor(amount: int):
 	armor += amount
 	emit_signal("armor_updated", armor)
@@ -134,7 +138,7 @@ func remove_armor():
 	armor = 0
 	emit_signal("armor_updated", armor)
 
-# ✅ **Health Handling**
+## Health Handling
 # Handle player taking damage (Modified to accept attacker argument)
 func take_damage(amount: int, attacker = null):
 	var effective_damage = max(amount - armor, 0)
@@ -144,10 +148,10 @@ func take_damage(amount: int, attacker = null):
 	current_hp = max(current_hp - effective_damage, 0)
 	emit_signal("health_updated", current_hp, max_hp)
 
-	# ✅ Apply relic effects if needed (e.g., "Master of Stealth" may prevent damage)
+	# Apply relic effects if needed (e.g., "Master of Stealth" may prevent damage)
 	apply_relics("on_damage", attacker)
 
-	# ✅ Check if player is dead
+	# Check if player is dead
 	if is_dead():
 		die()
 
@@ -172,7 +176,7 @@ func is_dead() -> bool:
 func die():
 	emit_signal("player_died")
 
-# ✅ **Turn Management**
+## Turn management
 func start_turn():
 	apply_relics("on_start_turn")
 	current_energy = max_energy
@@ -182,7 +186,7 @@ func start_turn():
 func end_turn():
 	apply_relics("after_turn")
 
-# ✅ **Card Handling**
+## Card Handling
 func draw_cards(amount: int):
 	emit_signal("draw_cards_requested", amount)
 
